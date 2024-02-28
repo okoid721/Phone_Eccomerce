@@ -36,7 +36,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     category: product.category,
     brand: product.brand,
     selectedImg: { ...product.images[0] },
-    quantity: 1,
+    quantity: 0,
     price: product.price,
   });
 
@@ -58,8 +58,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     [cartProduct.selectedImg]
   );
 
-  const handleQtyIncrease = useCallback(() => {}, []);
-  const handleQtyDecrease = useCallback(() => {}, []);
+  const handleQtyIncrease = useCallback(() => {
+    setCartProduct((prev) => {
+      return { ...prev, quantity: prev.quantity + 1 };
+    });
+  }, []);
+  const handleQtyDecrease = useCallback(() => {
+    setCartProduct((prev) => {
+      return { ...prev, quantity: prev.quantity + 1 };
+    });
+  }, []);
 
   return (
     <div className=" bg-white shadow-smooth border-[10px] p-12 grid grid-cols-1 md:grid-cols-2 gap-12 ">
