@@ -122,7 +122,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className=" h-[375px] w-[325px] p-[20px]  bg-white ">
+      <div className=" h-fit w-[325px] p-[15px]  bg-white shadow-smooth ">
         <Delivery />
       </div>
     </div>
