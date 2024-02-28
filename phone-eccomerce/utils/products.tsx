@@ -11,12 +11,12 @@ export const products = [
       {
         color: 'White',
         colorCode: '#FFFFFF',
-        image: 'https://m.media-amazon.com/images/I/71p-tHQ0u1L._AC_SX679_.jpg',
+        image: '/download-removebg-preview.png',
       },
       {
         color: 'Gray',
         colorCode: '#808080',
-        image: 'https://m.media-amazon.com/images/I/417tEj3iJ8L._AC_.jpg',
+        image: '/banner-image.png',
       },
     ],
     reviews: [],
