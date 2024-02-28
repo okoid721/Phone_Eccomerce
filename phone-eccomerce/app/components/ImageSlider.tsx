@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles/react-multi-carousel.css';
 
 const images = [
   {
@@ -15,10 +15,29 @@ const images = [
 ];
 
 const ImageSlider = () => {
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+
   return (
-    <Swiper>
+    <Carousel responsive={responsive}>
       {images.map((image, index) => (
-        <SwiperSlide key={index}>
+        <div key={index}>
           <div className=" mx-auto px-8 py-12 flex flex-col gap-2 md:flex-row items-center justify-evenly">
             <div className=" mb-8 md:mb-0 text-center">
               <h1 className=" text-4xl md:text-6xl font-bold text-white mb-4">
@@ -38,9 +57,9 @@ const ImageSlider = () => {
               />
             </div>
           </div>
-        </SwiperSlide>
+        </div>
       ))}
-    </Swiper>
+    </Carousel>
   );
 };
 
