@@ -59,15 +59,22 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   );
 
   const handleQtyIncrease = useCallback(() => {
+    if (cartProduct.quantity === 99) {
+      return;
+    }
     setCartProduct((prev) => {
       return { ...prev, quantity: prev.quantity + 1 };
     });
-  }, []);
+  }, [cartProduct]);
+
   const handleQtyDecrease = useCallback(() => {
+    if (cartProduct.quantity === 1) {
+      return;
+    }
     setCartProduct((prev) => {
-      return { ...prev, quantity: prev.quantity + 1 };
+      return { ...prev, quantity: prev.quantity - 1 };
     });
-  }, []);
+  }, [cartProduct]);
 
   return (
     <div className=" bg-white shadow-smooth border-[10px] p-12 grid grid-cols-1 md:grid-cols-2 gap-12 ">
