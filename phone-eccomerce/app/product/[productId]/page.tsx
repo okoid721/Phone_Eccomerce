@@ -12,7 +12,7 @@ const Product = ({ params }: { params: IPrams }) => {
   return (
     <div className=" p-8">
       <Containers>
-        <ProductDetails />
+        <ProductDetails product={product} />
       </Containers>
     </div>
   );
