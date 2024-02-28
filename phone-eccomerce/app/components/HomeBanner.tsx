@@ -12,9 +12,17 @@ interface ImageObject {
 const HomeBanner = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const imageUrls: ImageObject[] = [
-    { url: '/propropro.png', width: 600, height: 600 }, // Replace with actual images and dimensions
+    { url: '/banner-image.png', width: 600, height: 600 },
 
-    { url: '/image3.png', width: 600, height: 600 },
+    { url: '/download-removebg-preview.png', width: 600, height: 600 },
+
+    { url: '/download-removebg-preview (1).png', width: 600, height: 600 },
+
+    { url: '/download-removebg-preview (2).png', width: 600, height: 600 },
+
+    { url: '/download-removebg-preview (3).png', width: 600, height: 600 },
+
+    { url: '/download-removebg-preview (4).png', width: 600, height: 600 },
   ];
 
   useEffect(() => {
@@ -32,11 +40,11 @@ const HomeBanner = () => {
   };
 
   return (
-    <div className="relative bg-gradient-to-r boorder-[1.3px] rounded-full from-sky-400 to-blue-700 mb-8 h-[300px] flex justify-center items-center">
+    <div className="relative bg-gradient-to-r from-sky-400 to-blue-700 mb-8 h-[300px] flex justify-center items-center">
       <div className="mx-auto px-8 py-12 flex flex-col gap-2 md:flex-row items-center justify-evenly">
         <div className="mb-8 md:mb-0 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            Febuary Love Sales!
+            Best Sales Of The year
           </h1>
           <p className="text-lg md:text-xl text-white mb-2">
             Enjoy discounts on selected items
