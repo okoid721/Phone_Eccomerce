@@ -1,6 +1,7 @@
-'use Client';
+'use client';
 import React from 'react';
 import { IconType } from 'react-icons';
+import { Icon } from '@mui/material';
 
 interface ButtonProps {
   label: string;
@@ -25,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={` disabled:opacity-70 disabled: cursor-not-allowed rounded-md hover:opacity-80 transition w-full border-slate-700 flex items-center justify-center gap-2 ${
+      className={` disabled:opacity-70 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition w-full border-slate-700 flex items-center justify-center gap-2 ${
         outline ? 'bg-white' : 'bg-[#33b27b]'
       } ${outline ? 'text-slate-700' : 'text-white'} ${
         small ? 'text-sm font-light' : 'text-md font-semibold'

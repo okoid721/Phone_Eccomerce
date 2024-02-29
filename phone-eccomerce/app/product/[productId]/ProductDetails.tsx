@@ -7,6 +7,7 @@ import SetQuantity from '@/app/components/products/SetQuantity';
 import { Rating } from '@mui/material';
 import { useCart } from '@/app/hooks/useCart';
 import React, { useCallback, useEffect, useState } from 'react';
+import { MdCheckCircle } from 'react-icons/md';
 
 interface ProductDetailsProps {
   product: any;
@@ -126,24 +127,35 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
             {product.inStock ? 'InStock' : 'Out Of Stock'}{' '}
           </div>
           <Horizontal />
-          <SetColor
-            cartProduct={cartProduct}
-            images={product.images}
-            handleColorSelect={handleColorSelect}
-          />
-          <Horizontal />
-          <SetQuantity
-            cartProduct={cartProduct}
-            handleQtyIncrease={handleQtyIncrease}
-            handleQtyDecrease={handleQtyDecrease}
-          />
-          <Horizontal />
-          <div className=" max-w-32">
-            <Button
-              label="Add To Cart"
-              onClick={() => handleAddProductToCart(cartProduct)}
-            />
-          </div>
+          {isProductInCart ? (
+            <>
+              <p className=" mb-2 text-slate-500 flex items-center gap-1">
+                <MdCheckCircle size={20} className=" text-teal-100" />
+                <span>Product Added success</span>
+              </p>
+            </>
+          ) : (
+            <>
+              <SetColor
+                cartProduct={cartProduct}
+                images={product.images}
+                handleColorSelect={handleColorSelect}
+              />
+              <Horizontal />
+              <SetQuantity
+                cartProduct={cartProduct}
+                handleQtyIncrease={handleQtyIncrease}
+                handleQtyDecrease={handleQtyDecrease}
+              />
+              <Horizontal />
+              <div className=" max-w-32">
+                <Button
+                  label="Add To Cart"
+                  onClick={() => handleAddProductToCart(cartProduct)}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className=" h-fit w-full lg:w-[325px] p-[15px]  bg-white shadow-smooth ">
