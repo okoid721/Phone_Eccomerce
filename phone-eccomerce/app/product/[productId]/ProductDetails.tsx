@@ -79,8 +79,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   }, [cartProduct]);
 
   return (
-    <div className="  flex flex-col md:flex-row mx-auto  justify-between gap-3 pb-5">
-      <div className=" bg-white shadow-smooth border-[10px] p-12 grid grid-cols-1 md:grid-cols-2 gap-12 md:w-[80%] ">
+    <div className="  flex flex-col lg:flex-row mx-auto  justify-between gap-3 pb-5">
+      <div className=" bg-white shadow-smooth border-[10px] p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:w-[80%] ">
         <div>Images</div>
         <div className=" flex flex-col gap-1 text-slate-500 text-sm">
           <h2 className=" text-3xl font-medium text-slate-700">
@@ -122,7 +122,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className=" h-fit w-[325px] p-[15px]  bg-white shadow-smooth ">
+      <div className=" h-fit w-full lg:w-[325px] p-[15px]  bg-white shadow-smooth ">
         <Delivery />
       </div>
     </div>

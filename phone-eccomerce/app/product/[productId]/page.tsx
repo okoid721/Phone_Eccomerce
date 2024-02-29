@@ -10,7 +10,7 @@ const Product = ({ params }: { params: IPrams }) => {
   console.log('params', params);
 
   return (
-    <div className=" p-8">
+    <div className=" p-0 lg:p-8">
       <Containers>
         <ProductDetails product={product} />
       </Containers>
