@@ -1,4 +1,13 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import {toast} from 'react-hot-toast'
+
+
 import { CartProductType } from '../product/[productId]/ProductDetails';
 
 type CartContextType = {
@@ -19,6 +28,13 @@ export const CartContextProvider = (props: Props) => {
     null
   );
 
+  useEffect(() => {
+    const cartItems: any = localStorage.getItem('kingsMobile');
+    const cProducts: CartProductType[] | null = JSON.parse(cartItems);
+
+    setCartProducts(cProducts);
+  }, []);
+
   const handleAddProductToCart = useCallback((product: CartProductType) => {
     setCartProducts((prev) => {
       let updatedCart;
@@ -27,6 +43,9 @@ export const CartContextProvider = (props: Props) => {
       } else {
         updatedCart = [product];
       }
+
+      toast.success('Product Added')
+      localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
       return updatedCart;
     });
   }, []);
