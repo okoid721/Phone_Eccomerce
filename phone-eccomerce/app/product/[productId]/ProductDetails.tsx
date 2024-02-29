@@ -8,6 +8,7 @@ import { Rating } from '@mui/material';
 import { useCart } from '@/app/hooks/useCart';
 import React, { useCallback, useEffect, useState } from 'react';
 import { MdCheckCircle } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 
 interface ProductDetailsProps {
   product: any;
@@ -46,6 +47,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     quantity: 0,
     price: product.price,
   });
+
+  const router = useRouter();
+
   console.log(cartProducts);
 
   useEffect(() => {
@@ -56,11 +60,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         (item) => item.id === product.id
       );
 
-      if (existingIndex) {
+      if (existingIndex > -1) {
         setIsProductInCart(true);
       }
     }
-  }, [cartProduct]);
+  }, [cartProducts]);
 
   const productRating =
     product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /
@@ -133,6 +137,15 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
                 <MdCheckCircle size={20} className=" text-teal-100" />
                 <span>Product Added success</span>
               </p>
+              <div className=" max-w-[300px]">
+                <Button
+                  label="View Cart"
+                  outline
+                  onClick={() => {
+                    router.push('/cart');
+                  }}
+                />
+              </div>
             </>
           ) : (
             <>
