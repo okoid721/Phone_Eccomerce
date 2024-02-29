@@ -29,7 +29,7 @@ const CartClient = () => {
 
   return (
     <div className=" flex flex-col md:flex-row gap-2 justify-between w-full ">
-      <div className="bg-white w-[80%] p-4 ">
+      <div className="bg-white lg:w-[80%] p-4 w-full  ">
         <Haeding title="Shopping Cart" center />
         <div className=" grid grid-cols-5 text-xs gap-4 p-2 items-center mt-8">
           <div className=" col-span-2 justify-start">PRODUCT</div>
@@ -37,7 +37,7 @@ const CartClient = () => {
           <div className=" justify-center">QUANTITY</div>
           <div className=" justify-end">TOTAL</div>
         </div>
-        <div>
+        <div className=" border-b-2 mb-2 border-slate-200">
           {cartProducts &&
             cartProducts.map((item) => {
               return <ItemContent key={item.id} item={item} />;
@@ -47,8 +47,8 @@ const CartClient = () => {
           <Button label=" Clear Cart" onClick={() => {}} small outline />
         </div>
       </div>
-      <div className=" border-t-[1.5px] border-slate-200 py-4 flex justify-between gap-4 bg-white p-3 ">
-        <div className=" text-sm flex flex-col gap-1 items-start">
+      <div className=" border-t-[1.5px] border-slate-200 py-4 flex  items-center justify-center gap-4 bg-white p-3 ">
+        <div className=" text-sm flex flex-col gap-1 items-start  ">
           <div className=" flex justify-between w-full text-base font-semibold  ">
             <span>Subtotal</span>
             <span>$1000</span>
