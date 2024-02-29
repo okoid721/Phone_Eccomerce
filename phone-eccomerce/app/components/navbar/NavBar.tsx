@@ -8,7 +8,7 @@ const NavBar = () => {
   return (
     <div
       className="
-    sticky top-0 w-full bg-[#bb0000] z-30 shadow-sm
+    sticky top-0 w-full bg-[#ffff] z-30 shadow-smooth
      text-[#66666]"
     >
       <div className=" p-4 border-b-[1px] ">
