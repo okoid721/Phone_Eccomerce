@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { CartProductType } from '../product/[productId]/ProductDetails';
 
 type CartContextType = {
+  cartTotalAmount: number;
   cartTotalQty: number;
   cartProducts: CartProductType[] | null;
   handleAddProductToCart: (product: CartProductType) => void;
@@ -155,6 +156,7 @@ export const CartContextProvider = (props: Props) => {
 
   const value = {
     cartTotalQty,
+    cartTotalAmount,
     cartProducts,
     handleAddProductToCart,
     handleRemoveProductFromCart,
