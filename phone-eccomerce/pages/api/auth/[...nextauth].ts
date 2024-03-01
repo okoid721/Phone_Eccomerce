@@ -56,5 +56,13 @@ export default NextAuth({
             return user;
         }
         })
-    ]
+    ],
+    pages: {
+        signIn: "/login"
+    },
+    debug: process.env.NODE_ENV === 'development',
+    session: {
+        strategy: 'jwt'
+    },
+    secret: process.env.NEXTAUTH_SECRET
 })
