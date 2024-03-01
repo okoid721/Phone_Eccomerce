@@ -14,10 +14,11 @@ const CartCount = () => {
       className=" relative cursor-pointer"
       onClick={() => router.push('/cart')}
     >
-      <div className=" text-3xl">
+      <div className=" text-3xl flex flex-row items-center">
         <GiShoppingCart />
+        <p className=" text-[20px] text-slate-700 font-semibold">Cart</p>
       </div>
-      <span className=" absolute top-[10px] right-[10px] bg-slate-700 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm ">
+      <span className=" absolute top-[-6px] right-[40px] bg-slate-700 text-white h-4 w-4 rounded-full flex items-center justify-center text-[10px] ">
         {cartTotalQty}
       </span>
     </div>
