@@ -12,7 +12,10 @@ const UserMenu = () => {
   return (
     <>
       <div className=" relative z-30">
-        <div onClick={toggleOpen}>
+        <div
+          onClick={toggleOpen}
+          className=" p-2 border-[1px] border-slate-500 flex flex-row items-center gap-1  "
+        >
           <Avatar />
           <AiFillCaretDown />
         </div>
