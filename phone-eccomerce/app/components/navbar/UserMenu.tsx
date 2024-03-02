@@ -8,8 +8,13 @@ import MenuItem from './MenuItem';
 import { signOut } from 'next-auth/react';
 import BackDrop from './BackDrop';
 import { useCart } from '@/app/hooks/useCart';
+import { User } from '@prisma/client';
 
-const UserMenu = () => {
+interface UserMenuProps {
+  currentUser: User;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { handlesetIsLoggedIn, isLoggedIn } = useCart();
   const toggleOpen = useCallback(() => {
@@ -46,16 +51,14 @@ const UserMenu = () => {
               </MenuItem>
             </div>
             <div>
-              {!isLoggedIn && (
-                <div>
-                  <Link href={'/login'}>
-                    <MenuItem onClick={toggleOpen}>Log in</MenuItem>
-                  </Link>
-                  <Link href={'/register'}>
-                    <MenuItem onClick={toggleOpen}>Create an account</MenuItem>
-                  </Link>
-                </div>
-              )}
+              <div>
+                <Link href={'/login'}>
+                  <MenuItem onClick={toggleOpen}>Log in</MenuItem>
+                </Link>
+                <Link href={'/register'}>
+                  <MenuItem onClick={toggleOpen}>Create an account</MenuItem>
+                </Link>
+              </div>
             </div>
           </div>
         )}
