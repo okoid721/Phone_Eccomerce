@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Haeding from '../components/Haeding';
 import Input from '../components/inputs/Input';
 import { register } from 'module';
@@ -11,8 +11,13 @@ import { AiOutlineGoogle } from 'react-icons/ai';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { SafeUser } from '@/types';
 
-const LoginForm = () => {
+interface LoginFormProps {
+  currentUser: SafeUser | null;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -26,6 +31,13 @@ const LoginForm = () => {
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push('/');
+      router.refresh;
+    }
+  }, []);
 
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -47,6 +59,15 @@ const LoginForm = () => {
       }
     });
   };
+
+  if (currentUser) {
+    return (
+      <p className=" text-center font-bold text-3xl">
+        {' '}
+        Logged In Redirecting....
+      </p>
+    );
+  }
 
   return (
     <>
