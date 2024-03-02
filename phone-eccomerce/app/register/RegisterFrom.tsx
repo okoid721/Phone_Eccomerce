@@ -44,9 +44,11 @@ const RegisterFrom = () => {
           redirect: false,
         }).then((callback) => {
           if (callback?.ok) {
-            router.push('/cart');
-            router.refresh();
-            toast.success('Logged In');
+            setTimeout(() => {
+              router.push('/cart');
+              router.refresh();
+              toast.success('Logged In');
+            }, 0);
           }
           if (callback?.error) {
             toast.error(callback.error);
@@ -58,7 +60,7 @@ const RegisterFrom = () => {
         setIsLoading(false);
       });
   };
-
+  console.log(onsubmit);
   return (
     <>
       <Haeding title="Sign Up" />
@@ -107,5 +109,7 @@ const RegisterFrom = () => {
     </>
   );
 };
+
+console.log(RegisterFrom);
 
 export default RegisterFrom;

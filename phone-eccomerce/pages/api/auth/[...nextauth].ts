@@ -7,12 +7,6 @@ import bcrypt from 'bcrypt'
 
 
 
-// export { handlers, auth, signIn, signOut } = NextAuth({
-//   adapter: PrismaAdapter(prisma),
-//   providers: [
-//     Google,
-//   ],
-// })
 
 export default NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -43,6 +37,7 @@ export default NextAuth({
                     email: credentials.email
                 }
             })
+            
             if(!user || !user?.hashedPassword){
                 throw new Error('invalid User')
             }
@@ -56,6 +51,8 @@ export default NextAuth({
             return user;
         }
         })
+    
+       
     ],
     pages: {
         signIn: "/login"
@@ -66,3 +63,5 @@ export default NextAuth({
     },
     secret: process.env.NEXTAUTH_SECRET
 })
+console.log(NextAuth)
+
