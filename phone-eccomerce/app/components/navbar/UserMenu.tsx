@@ -9,9 +9,10 @@ import { signOut } from 'next-auth/react';
 import BackDrop from './BackDrop';
 import { useCart } from '@/app/hooks/useCart';
 import { User } from '@prisma/client';
+import { SafeUser } from '@/types';
 
 interface UserMenuProps {
-  currentUser: User;
+  currentUser: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
@@ -32,34 +33,40 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         </div>
         {isOpen && (
           <div className="absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer ">
-            <div>
-              <Link href={'/orders'}>
-                <MenuItem onClick={toggleOpen}>My Orders</MenuItem>
-              </Link>
-            </div>
-            <div>
-              <Link href={'/admin'}>
-                <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
-              </Link>
-              <MenuItem
-                onClick={() => {
-                  toggleOpen();
-                  signOut();
-                }}
-              >
-                Log Out
-              </MenuItem>
-            </div>
-            <div>
+            {currentUser ? (
+              <>
+                <div>
+                  <Link href={'/orders'}>
+                    <MenuItem onClick={toggleOpen}>My Orders</MenuItem>
+                  </Link>
+                </div>
+                <div>
+                  <Link href={'/admin'}>
+                    <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
+                  </Link>
+                  <hr />
+                  <MenuItem
+                    onClick={() => {
+                      toggleOpen();
+                      signOut();
+                    }}
+                  >
+                    Log Out
+                  </MenuItem>
+                </div>
+              </>
+            ) : (
               <div>
-                <Link href={'/login'}>
-                  <MenuItem onClick={toggleOpen}>Log in</MenuItem>
-                </Link>
-                <Link href={'/register'}>
-                  <MenuItem onClick={toggleOpen}>Create an account</MenuItem>
-                </Link>
+                <div>
+                  <Link href={'/login'}>
+                    <MenuItem onClick={toggleOpen}>Log in</MenuItem>
+                  </Link>
+                  <Link href={'/register'}>
+                    <MenuItem onClick={toggleOpen}>Create an account</MenuItem>
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
       </div>
