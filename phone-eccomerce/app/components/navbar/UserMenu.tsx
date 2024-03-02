@@ -4,6 +4,9 @@ import { useCallback, useState } from 'react';
 import Avatar from '../Avatar';
 import { AiFillCaretDown } from 'react-icons/ai';
 import Link from 'next/link';
+import MenuItem from './MenuItem';
+import { signOut } from 'next-auth/react';
+import BackDrop from './BackDrop';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,13 +24,37 @@ const UserMenu = () => {
           <AiFillCaretDown />
         </div>
         {isOpen && (
-          <div className="absolute rounded-md shadow-md w-170px bg-white overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer ">
+          <div className="absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer ">
             <div>
-              <Link href={'orders'}></Link>
+              <Link href={'/orders'}>
+                <MenuItem onClick={toggleOpen}>My Orders</MenuItem>
+              </Link>
+            </div>
+            <div>
+              <Link href={'/admin'}>
+                <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
+              </Link>
+              <MenuItem
+                onClick={() => {
+                  toggleOpen();
+                  signOut();
+                }}
+              >
+                Log Out
+              </MenuItem>
+            </div>
+            <div>
+              <Link href={'/login'}>
+                <MenuItem onClick={toggleOpen}>Login</MenuItem>
+              </Link>
+              <Link href={'/register'}>
+                <MenuItem onClick={toggleOpen}>Create Account</MenuItem>
+              </Link>
             </div>
           </div>
         )}
       </div>
+      {isOpen ? <BackDrop onClick={toggleOpen} /> : null}
     </>
   );
 };
