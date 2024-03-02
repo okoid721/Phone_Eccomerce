@@ -47,7 +47,7 @@ const RegisterFrom = () => {
             setTimeout(() => {
               router.push('/cart');
               router.refresh();
-              toast.success('Logged In');
+              toast.success('created successfully');
             }, 0);
           }
           if (callback?.error) {

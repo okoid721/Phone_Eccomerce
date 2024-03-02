@@ -8,6 +8,9 @@ import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 import Button from '../components/Button';
 import Link from 'next/link';
 import { AiOutlineGoogle } from 'react-icons/ai';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,9 +25,27 @@ const LoginForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    console.log(data);
+    signIn('credentials', {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        setTimeout(() => {
+          router.push('/');
+          router.refresh();
+          toast.success('Logged In');
+        }, 0);
+      }
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
   };
 
   return (
@@ -60,7 +81,7 @@ const LoginForm = () => {
       />
       <p className=" text-sm">
         Do Not Have An Account?{' '}
-        <Link className=" underline" href={'/Sign Up'}>
+        <Link className=" underline" href={'/register'}>
           Sign Up
         </Link>
       </p>
