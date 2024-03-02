@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (currentUser) {
-      router.push('/');
+      router.push('/cart');
       router.refresh;
     }
   }, []);
@@ -76,7 +76,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
         outline
         label="Continue with Google"
         icon={AiOutlineGoogle}
-        onClick={() => {}}
+        onClick={() => {
+          signIn('google');
+        }}
       />
       <hr className=" bg-slate-500 w-full h-px" />
       <Input

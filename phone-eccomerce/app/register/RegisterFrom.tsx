@@ -37,7 +37,7 @@ const RegisterFrom: React.FC<RegisterFormProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (currentUser) {
-      router.push('/');
+      router.push('/cart');
       router.refresh;
     }
   }, []);
@@ -89,7 +89,9 @@ const RegisterFrom: React.FC<RegisterFormProps> = ({ currentUser }) => {
         outline
         label="Sign Up Using Google"
         icon={AiOutlineGoogle}
-        onClick={() => {}}
+        onClick={() => {
+          signIn('google');
+        }}
       />
       <hr className=" bg-slate-500 w-full h-px" />
       <Input
