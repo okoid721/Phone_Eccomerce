@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Haeding from '../components/Haeding';
 import Input from '../components/inputs/Input';
 import { register } from 'module';
@@ -15,15 +15,11 @@ import { Router } from 'next/router';
 import { useRouter } from 'next/navigation';
 import { SafeUser } from '@/types';
 
-
-
-
 interface RegisterFormProps {
   currentUser: SafeUser | null;
 }
 
-
-const RegisterFrom: React.FC<RegisterFormProps> = ({currentUser}) => {
+const RegisterFrom: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -38,6 +34,13 @@ const RegisterFrom: React.FC<RegisterFormProps> = ({currentUser}) => {
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push('/');
+      router.refresh;
+    }
+  }, []);
 
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -69,7 +72,16 @@ const RegisterFrom: React.FC<RegisterFormProps> = ({currentUser}) => {
         setIsLoading(false);
       });
   };
-  console.log(onsubmit);
+
+  if (currentUser) {
+    return (
+      <p className=" text-center font-bold text-3xl">
+        {' '}
+        Logged In Redirecting....
+      </p>
+    );
+  }
+
   return (
     <>
       <Haeding title="Sign Up" />
