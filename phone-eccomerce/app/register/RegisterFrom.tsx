@@ -13,8 +13,17 @@ import toast from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 import { Router } from 'next/router';
 import { useRouter } from 'next/navigation';
+import { SafeUser } from '@/types';
 
-const RegisterFrom = () => {
+
+
+
+interface RegisterFormProps {
+  currentUser: SafeUser | null;
+}
+
+
+const RegisterFrom: React.FC<RegisterFormProps> = ({currentUser}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
