@@ -1,9 +1,50 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { useCart } from '../hooks/useCart';
+import { Router } from 'next/router';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const CheckoutClient = () => {
   const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
-  return <div></div>;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (cartProducts) {
+      setLoading(true);
+      setError(false);
+
+      fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cartProducts,
+          payment_intent_id: paymentIntent,
+        }),
+      })
+        .then((res) => {
+          setLoading(false);
+          if (res.status === 401) {
+            return router.push('/login');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setClientSecret(data.transaction.reference);
+          handleSetPaymentIntent(data.transaction.reference);
+        })
+        .catch((error) => {
+          setError(true);
+          console.log('Error', error);
+          toast.error('something went wrong');
+        });
+    }
+  }, [cartProducts, paymentIntent]);
+  return <>Checkout</>;
 };
 
 export default CheckoutClient;
