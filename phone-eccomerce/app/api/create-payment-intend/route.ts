@@ -44,5 +44,6 @@ export async function POST(request: Request){
             automatic_payment_methods: {enabled: true}
         })
         //create the order
+        
     }
 }
