@@ -36,9 +36,7 @@ export const CartContextProvider = (props: Props) => {
   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
     null
   );
-
-  console.log('qty', cartTotalQty);
-  console.log('amount', cartTotalAmount);
+  const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
 
   useEffect(() => {
     const cartItems: any = localStorage.getItem('kingsMobile');
