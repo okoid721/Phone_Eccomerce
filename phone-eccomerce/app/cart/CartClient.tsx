@@ -1,15 +1,22 @@
-'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../hooks/useCart';
 import Link from 'next/link';
 import { MdArrowBack } from 'react-icons/md';
 import Haeding from '../components/Haeding';
+import { useRouter } from 'next/navigation';
 import Button from '../components/Button';
 import ItemContent from './ItemContent';
 import { formatPrice } from '@/utils/formatPrice';
+import CheckoutClient from '../checkout/CheckoutClient';
 
 const CartClient = () => {
+  const router = useRouter();
   const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
+  const [checkoutClicked, setCheckoutClicked] = useState(false);
+
+  if (checkoutClicked) {
+    return <CheckoutClient />;
+  }
 
   if (!cartProducts || cartProducts.length === 0) {
     return (
@@ -64,7 +71,12 @@ const CartClient = () => {
           <p className=" text-slate-500">
             Taxes and shipping calculate at checkout
           </p>
-          <Button label="checkout" onClick={() => {}} />
+          <Button
+            label="checkout"
+            onClick={() => {
+              setCheckoutClicked(true);
+            }}
+          />
           <Link
             href={'/'}
             className=" text-slate-500 flex items-center gap-1 mt-2 "
@@ -79,5 +91,3 @@ const CartClient = () => {
 };
 
 export default CartClient;
-
-// <PaystackButton publicKey={''} email={''} amount={0} />
