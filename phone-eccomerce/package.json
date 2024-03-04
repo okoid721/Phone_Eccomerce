@@ -39,7 +39,7 @@
     "react-paystack": "^5.0.0",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
-    "stripe": "^14.19.0",
+    "paystack": "^14.19.0",
     "swiper": "^11.0.7",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3"

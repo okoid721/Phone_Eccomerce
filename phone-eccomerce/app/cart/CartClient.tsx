@@ -79,3 +79,5 @@ const CartClient = () => {
 };
 
 export default CartClient;
+
+// <PaystackButton publicKey={''} email={''} amount={0} />
