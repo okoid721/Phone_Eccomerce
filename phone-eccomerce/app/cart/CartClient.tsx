@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { useCart } from '../hooks/useCart';
 import Link from 'next/link';
@@ -8,6 +9,7 @@ import Button from '../components/Button';
 import ItemContent from './ItemContent';
 import { formatPrice } from '@/utils/formatPrice';
 import CheckoutClient from '../checkout/CheckoutClient';
+import Paystck from '../paystack/Paystck';
 
 const CartClient = () => {
   const router = useRouter();
@@ -15,7 +17,7 @@ const CartClient = () => {
   const [checkoutClicked, setCheckoutClicked] = useState(false);
 
   if (checkoutClicked) {
-    return <CheckoutClient />;
+    return <Paystck />;
   }
 
   if (!cartProducts || cartProducts.length === 0) {

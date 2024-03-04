@@ -2,6 +2,7 @@
 // import React, { useState } from 'react';
 // import toast from 'react-hot-toast';
 // import { PaystackButton } from 'react-paystack';
+// import Input from '@mui/material/Input';
 
 // const Paystack = () => {
 //   const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123'; // Ensure there are no extra spaces
@@ -34,14 +35,14 @@
 //   return (
 //     <div>
 //       <div className="w-full">
-//         <div className=" bg-white w-full h-full mx-auto items-center justify-center ">
-//           <form className=" flex flex-col items-center justify-center ">
+//         <div className=" bg-white w-[50%] h-full mx-auto items-center justify-center ">
+//           <form className=" flex flex-col items-center justify-center w-full  gap-[10px] p-10">
 //             <input
 //               type="text"
 //               placeholder="Name"
 //               id="name"
 //               onChange={(e) => setName(e.target.value)}
-//               className=" w-full p-2 border-[1px]   "
+//               className=" border-[1px] padding-[10px]"
 //             />
 
 //             <input
@@ -50,6 +51,7 @@
 //               id="email"
 //               onChange={(e) => setEmail(e.target.value)}
 //             />
+//             <Input />
 
 //             <input
 //               type="text"
