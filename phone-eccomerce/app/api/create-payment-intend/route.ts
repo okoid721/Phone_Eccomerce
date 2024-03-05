@@ -23,19 +23,17 @@ export async function POST(request: Request) {
   const body = await request.json();
   const { items, payment_intent_id } = body;
   const total = calculateOrderAmount(items) * 100;
-  const orderData = {
-    user: { connect: { id: currentUser.id } },
-    amount: total,
-    currency: 'usd',
-    status: 'pending',
-    deliveryStatusId: 'pending',
-    paymentIntentId: payment_intent_id,
-    products: items,
-  };
 
   if (payment_intent_id) {
     //update payment
     const transaction = await paystack.transaction.verify(payment_intent_id);
+
+    if (transaction) {
+      const update_intent = await paystack.transaction.updatePaymentIntent(
+        payment_intent_id,
+        { amount: total }
+      );
+    }
 
     if (transaction.data) {
       //update the order
@@ -51,6 +49,14 @@ export async function POST(request: Request) {
             products: items,
           },
         });
+        if (!existing_order) {
+          return NextResponse.json(
+            {
+              error: 'Invalid Payment Intent',
+            },
+            { status: 400 }
+          );
+        }
       }
 
       return NextResponse.json({ paymentIntent: transaction.data });

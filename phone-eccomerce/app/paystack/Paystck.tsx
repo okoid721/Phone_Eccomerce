@@ -3,6 +3,7 @@
 // import toast from 'react-hot-toast';
 // import { PaystackButton } from 'react-paystack';
 // import Input from '@mui/material/Input';
+// import { useCart } from '../hooks/useCart';
 
 // const Paystack = () => {
 //   const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123'; // Ensure there are no extra spaces
@@ -11,8 +12,10 @@
 //   const [name, setName] = useState('');
 //   const [phone, setPhone] = useState('');
 
+//   const { cartTotalAmount } = useCart();
+
 //   // Validate amount and convert to smallest currency unit
-//   const calculateAmount = (amount: string | null) => {
+//   const calculateAmount = (amount: number | null) => {
 //     if (amount && !isNaN(amount)) {
 //       return Math.round(amount * 100);
 //     }
@@ -21,7 +24,7 @@
 
 //   const componentProps = {
 //     email,
-//     amount: calculateAmount(amount), // Use calculated amount
+//     amount: calculateAmount(cartTotalAmount), // Use calculated amount
 //     metadata: {
 //       name,
 //       phone,
