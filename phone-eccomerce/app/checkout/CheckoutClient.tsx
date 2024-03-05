@@ -1,22 +1,30 @@
-'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCart } from '../hooks/useCart';
-import { Router } from 'next/router';
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { PaystackButton } from 'react-paystack';
+import { useRouter } from 'next/navigation';
 
-const Paystack = ({ email, amount, publicKey, onSuccess, onClose }) => {
-  const componentProps = {
-    email,
-    amount,
-    publicKey,
-    text: 'Pay Now',
-    onSuccess,
-    onClose,
-  };
-
-  return <PaystackButton {...componentProps} />;
+const Paystack = ({ email, amount, publicKey, charge, onSuccess }) => {
+  return (
+    <PaystackButton
+      email={email}
+      amount={amount}
+      publicKey={publicKey}
+      text="Pay Now" // You can customize the button text here
+      metadata={{
+        custom_fields: [
+          {
+            display_name: 'Email',
+            variable_name: 'email',
+            value: email,
+          },
+        ],
+      }}
+      channels={['card', 'bank']} // You can specify the payment channels here
+      onSuccess={onSuccess}
+      onClose={() => toast.error('Payment canceled')}
+    />
+  );
 };
 
 const CheckoutClient = () => {
@@ -28,41 +36,17 @@ const CheckoutClient = () => {
   const [paystackAmount, setPaystackAmount] = useState(0);
   const router = useRouter();
 
+  const publicKey = 'pk_live_b362b66abe1bf71f85ee09eb67637af693c2888a '; // Replace with your Paystack public key
+
   useEffect(() => {
     if (cartProducts) {
       setLoading(true);
       setError(false);
 
-      fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: cartProducts,
-          payment_intent_id: paymentIntent,
-        }),
-      })
-        .then((res) => {
-          setLoading(false);
-          if (res.status === 401) {
-            return router.push('/login');
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setClientSecret(data.transaction.reference);
-          handleSetPaymentIntent(data.transaction.reference);
-          setPaystackAmount(data.transaction.amount);
-          setPaystackEmail(data.transaction.email);
-        })
-        .catch((error) => {
-          setError(true);
-          console.log('Error', error);
-          toast.error('something went wrong');
-        });
+      // Fetch client secret and other necessary data for Paystack integration
+      // You'll need to implement this logic according to your server-side setup
     }
   }, [cartProducts, paymentIntent]);
-
-  const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123';
 
   return (
     <>
@@ -72,8 +56,14 @@ const CheckoutClient = () => {
             email={paystackEmail}
             amount={paystackAmount}
             publicKey={publicKey}
-            onSuccess={() => toast.success('payment successful')}
-            onClose={() => toast.error('payment failed')}
+            charge={{
+              email: paystackEmail,
+              amount: paystackAmount,
+            }}
+            onSuccess={() => {
+              // Handle success event, e.g., redirect to thank you page
+              router.push('/thank-you');
+            }}
           />
         )}
       </div>

@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     if (transaction) {
       const update_intent = await paystack.transaction.updatePaymentIntent(
         payment_intent_id,
-        { amount: total }
+        { amount: String(total) }
       );
     }
 
@@ -49,14 +49,6 @@ export async function POST(request: Request) {
             products: items,
           },
         });
-        if (!existing_order) {
-          return NextResponse.json(
-            {
-              error: 'Invalid Payment Intent',
-            },
-            { status: 400 }
-          );
-        }
       }
 
       return NextResponse.json({ paymentIntent: transaction.data });
@@ -64,7 +56,7 @@ export async function POST(request: Request) {
   } else {
     // create the intent
     const transaction = await paystack.transaction.initialize({
-      amount: total * 100, // Convert to kobo, the Nigerian currency unit
+      amount: total * 100,
       email: currentUser.email,
       callback_url: `${process.env.NEXTAUTH_URL}/api/paystack/callback`,
     });
