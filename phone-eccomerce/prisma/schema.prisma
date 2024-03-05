@@ -81,6 +81,19 @@ type Address {
     state       String
 }
 
+model Payment {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId        String   @db.ObjectId
+    amount        Float
+    currency      String
+    status        String
+    paymentMethod String
+    createdAt     DateTime @default(now())
+    email         String
+    name          String
+    phone         String
+}
+
 enum Role {
     USER
     ADMIN

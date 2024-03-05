@@ -1,17 +1,17 @@
-// import Containers from '../components/Containers';
-// import FormWrap from '../components/FormWrap';
-// import Paystck from './Paystck';
+import Containers from '../components/Containers';
+import FormWrap from '../components/FormWrap';
+import Paystck from './Paystck';
 
-// const Pay = async () => {
-//   return (
-//     <>
-//       <Containers>
-//         <FormWrap>
-//           <Paystck />
-//         </FormWrap>
-//       </Containers>
-//     </>
-//   );
-// };
+const Pay = async () => {
+  return (
+    <>
+      <Containers>
+        <FormWrap>
+          <Paystck />
+        </FormWrap>
+      </Containers>
+    </>
+  );
+};
 
-// export default Pay;
+export default Pay;

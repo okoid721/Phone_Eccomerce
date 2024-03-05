@@ -68,14 +68,7 @@ const CartClient = () => {
           <p className=" text-slate-500">
             Taxes and shipping calculate at checkout
           </p>
-          <div>
-            <Button
-              label="Clear Cart"
-              onClick={handleClearCart}
-              small
-              outline
-            />
-          </div>
+          <Button label="checkout" onClick={() => {}} />
           <Link
             href={'/'}
             className=" text-slate-500 flex items-center gap-1 mt-2 "
