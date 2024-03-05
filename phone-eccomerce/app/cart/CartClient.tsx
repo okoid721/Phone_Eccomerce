@@ -9,16 +9,11 @@ import Button from '../components/Button';
 import ItemContent from './ItemContent';
 import { formatPrice } from '@/utils/formatPrice';
 import CheckoutClient from '../checkout/CheckoutClient';
-import Paystck from '../paystack/Paystck';
 
 const CartClient = () => {
   const router = useRouter();
   const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
   const [checkoutClicked, setCheckoutClicked] = useState(false);
-
-  if (checkoutClicked) {
-    return <Paystck />;
-  }
 
   if (!cartProducts || cartProducts.length === 0) {
     return (
@@ -73,12 +68,7 @@ const CartClient = () => {
           <p className=" text-slate-500">
             Taxes and shipping calculate at checkout
           </p>
-          <Button
-            label="checkout"
-            onClick={() => {
-              setCheckoutClicked(true);
-            }}
-          />
+          <Button label="checkout" onClick={() => {}} />
           <Link
             href={'/'}
             className=" text-slate-500 flex items-center gap-1 mt-2 "
