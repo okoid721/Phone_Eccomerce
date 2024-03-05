@@ -1,6 +1,5 @@
-'use client';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { useCart } from '../hooks/useCart';
 
@@ -9,8 +8,10 @@ const CheckoutClient = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [clientSecret, setClientSecret] = useState('');
-
   const router = useRouter();
+
+  console.log('paymentIntent', paymentIntent);
+  console.log('clientSecret', clientSecret);
 
   useEffect(() => {
     if (cartProducts) {
@@ -39,10 +40,11 @@ const CheckoutClient = () => {
         .catch((error) => {
           setError(true);
           console.log('Error', error);
-          toast.error('something went wrong');
+          toast.error('Something went wrong');
         });
     }
   }, [cartProducts, paymentIntent]);
+
   return <>Checkout</>;
 };
 
