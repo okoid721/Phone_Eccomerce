@@ -41,16 +41,16 @@ model User {
 }
 
 model Order {
-    id              String            @id @default(auto()) @map("_id") @db.ObjectId
-    userId          String            @db.ObjectId
-    amount          Float
-    currency        String
-    status          String
-    deliveryStatus  String?
-    createdDate     DateTime          @default(now())
-    paymentIntentId String            @unique
-    products        CartProductType[]
-    address         Address?
+    id             String            @id @default(auto()) @map("_id") @db.ObjectId
+    userId         String            @db.ObjectId
+    amount         Float
+    currency       String
+    status         String
+    deliveryStatus String?
+    createdDate    DateTime          @default(now())
+    paystackId     String            @unique
+    products       CartProductType[]
+    address        Address?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -92,6 +92,7 @@ model Payment {
     email         String
     name          String
     phone         String
+    paystackId    String?
 }
 
 enum Role {
