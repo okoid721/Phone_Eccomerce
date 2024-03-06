@@ -201,9 +201,10 @@ export const CartContextProvider = (props: Props) => {
 export const useCart = () => {
   const context = useContext(CartContext);
 
-  if (context === null) {
-    throw new Error('useCart must be used within the CartContextProvider');
+  if (!context) {
+    throw new Error('useCart must be used within a CartContextProvider');
   }
+
   return context;
 };
 

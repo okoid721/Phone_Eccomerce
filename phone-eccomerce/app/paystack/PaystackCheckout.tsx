@@ -6,7 +6,7 @@ import { useCart } from '../hooks/useCart';
 import Input from '../components/inputs/Input';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/libs/prismadb';
 
 const PaystackCheckout = () => {
   const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123';
@@ -20,7 +20,6 @@ const PaystackCheckout = () => {
     setName('');
     setPhone('');
   };
-  const prisma = new PrismaClient();
   const router = useRouter();
 
   const componentProps = {
@@ -41,8 +40,8 @@ const PaystackCheckout = () => {
     onClose: () => {},
   };
   const handlePayment = async (paymentId: any) => {
-    const { data } = await createPayment(paymentId);
-    if (data) {
+    const order = await createPayment(paymentId);
+    if (order) {
       // handle success
       await prisma.payment.create({
         data: {
