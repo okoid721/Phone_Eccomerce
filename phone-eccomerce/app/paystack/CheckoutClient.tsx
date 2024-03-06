@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useCart } from '../hooks/useCart';
 import { PaystackButton } from 'react-paystack';
 import Paystack from '../components/PaystackButton';
-import PaystackCheckout from '../paystack/PaystackCheckout';
+import PaystackCheckout from './PaystackCheckout';
 
 const CheckoutClient = () => {
   const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();

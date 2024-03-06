@@ -1,12 +1,12 @@
 import Containers from '../components/Containers';
 import FormWrap from '../components/FormWrap';
-import PaystackCheckout from './PaystackCheckout';
+import CheckoutClient from './CheckoutClient';
 
 const Pay = () => {
   return (
     <Containers>
       <FormWrap>
-        <PaystackCheckout />
+        <CheckoutClient />
       </FormWrap>
     </Containers>
   );

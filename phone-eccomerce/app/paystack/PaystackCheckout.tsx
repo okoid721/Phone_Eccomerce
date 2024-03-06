@@ -6,7 +6,6 @@ import { useCart } from '../hooks/useCart';
 import Input from '../components/inputs/Input';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import prisma from '@/libs/prismadb';
 
 const PaystackCheckout = () => {
   const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123';
@@ -44,7 +43,6 @@ const PaystackCheckout = () => {
     <div>
       <div>
         <div>
-          <p>Coconut Oil</p>
           <p>{formatPrice(amount)}</p>
         </div>
         <div>
