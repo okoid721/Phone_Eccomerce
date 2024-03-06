@@ -48,7 +48,7 @@ model Order {
     status         String
     deliveryStatus String?
     createdDate    DateTime          @default(now())
-    paystackId     String            @unique
+    paystackId     String            @unique // Here is the paystackId field
     products       CartProductType[]
     address        Address?
 

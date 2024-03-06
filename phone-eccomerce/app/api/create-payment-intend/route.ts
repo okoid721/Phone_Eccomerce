@@ -29,20 +29,20 @@ export async function POST(request: Request) {
   const orderData = {
     user: { connect: { id: currentUser.id } },
     amount: total,
-    currency: 'usd',
+    currency: 'NGN',
     status: 'pending',
     deliveryStatus: 'pending',
-    paymentIntentId: payment_intent_id,
+    paystackId: payment_intent_id,
     products: items,
   };
   if (payment_intent_id) {
     //update payment
-    const current_intent = await paystack.paymentIntents.retrieve(
+    const current_intent = await paystack.transactions.retrieve(
       payment_intent_id
     );
 
     if (current_intent) {
-      const updated_intent = await paystack.paymentIntents.update(
+      const updated_intent = await paystack.transactions.update(
         payment_intent_id,
         { amount: total }
       );
@@ -51,10 +51,10 @@ export async function POST(request: Request) {
 
       const [existing_order, update_order] = await Promise.all([
         prisma.order.findFirst({
-          where: { paymentIntentId: payment_intent_id },
+          where: { paystackId: payment_intent_id },
         }),
         prisma.order.update({
-          where: { paymentIntentId: payment_intent_id },
+          where: { paystackId: payment_intent_id },
           data: {
             amount: total,
             products: items,
@@ -68,13 +68,13 @@ export async function POST(request: Request) {
     }
   } else {
     // create the intent
-    const paymentIntent = await paystack.paymentIntents.create({
+    const paymentIntent = await paystack.transactions.create({
       amount: total,
       currency: 'NGN',
       automatic_payment_methods: { enabled: true },
     });
     //create the order
-    orderData.paymentIntentId = paymentIntent.id;
+    orderData.paystackId = paymentIntent.id;
 
     await prisma.order.create({
       data: orderData,
