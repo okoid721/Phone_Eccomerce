@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -5,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useCart } from '../hooks/useCart';
 import { PaystackButton } from 'react-paystack';
 import Paystack from '../components/PaystackButton';
+import PaystackCheckout from '../paystack/PaystackCheckout';
 
 const CheckoutClient = () => {
   const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
@@ -55,16 +57,17 @@ const CheckoutClient = () => {
 
   return (
     <div className="">
-      <Paystack
-        amount={0}
-        email={''}
-        onSuccess={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-        onClose={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+      {cartProducts && (
+        <PaystackCheckout
+          cartProducts={cartProducts}
+          paymentSuccess={paymentSuccess}
+          handleSetPaymentSuccess={handleSetPaymentSuccess}
+        />
+      )}{' '}
+      {loading && <div className="text-center">Loading Checkout....</div>}
+      {error && (
+        <div className="text-center text-red-500">Something went wrong</div>
+      )}
     </div>
   );
 };
