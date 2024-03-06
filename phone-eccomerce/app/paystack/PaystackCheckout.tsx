@@ -6,6 +6,7 @@ import { useCart } from '../hooks/useCart';
 import Input from '../components/inputs/Input';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { PrismaClient } from '@prisma/client';
 
 const PaystackCheckout = () => {
   const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123';
@@ -19,6 +20,7 @@ const PaystackCheckout = () => {
     setName('');
     setPhone('');
   };
+  const prisma = new PrismaClient();
   const router = useRouter();
 
   const componentProps = {
@@ -37,6 +39,40 @@ const PaystackCheckout = () => {
       router.push('/');
     },
     onClose: () => {},
+  };
+  const handlePayment = async (paymentId: any) => {
+    const { data } = await createPayment(paymentId);
+    if (data) {
+      // handle success
+      await prisma.payment.create({
+        data: {
+          userId: 'user_id', // get the user id from the session
+          amount: amount,
+          currency: 'NGN',
+          status: 'success',
+          paymentMethod: 'Paystack',
+          email,
+          name,
+          phone,
+          paystackId: paymentId,
+        },
+      });
+    } else {
+      // handle failure
+      await prisma.payment.create({
+        data: {
+          userId: 'user_id', // get the user id from the session
+          amount: amount,
+          currency: 'NGN',
+          status: 'failed',
+          paymentMethod: 'Paystack',
+          email,
+          name,
+          phone,
+          paystackId: paymentId,
+        },
+      });
+    }
   };
 
   return (
@@ -84,7 +120,11 @@ const PaystackCheckout = () => {
                 className="peer w-full p-1 pt-6 outline-none bg-white font-light border-2 rounded-md transition"
               />
             </div>
-            <PaystackButton className="paystack-button" {...componentProps} />
+            <PaystackButton
+              className="paystack-button"
+              {...componentProps}
+              onSuccess={(reference) => handlePayment(reference.trxref)}
+            />
           </div>
         </div>
       </div>
@@ -93,3 +133,8 @@ const PaystackCheckout = () => {
 };
 
 export default PaystackCheckout;
+function createPayment(
+  paymentId: any
+): { data: any } | PromiseLike<{ data: any }> {
+  throw new Error('Function not implemented.');
+}
