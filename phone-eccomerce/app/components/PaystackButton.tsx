@@ -4,20 +4,22 @@ import { useState } from 'react';
 import { PaystackButton } from 'react-paystack';
 import axios from 'axios';
 import prisma from '@/libs/prismadb';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   amount: number;
   email: string;
-  onSuccess: () => void;
-  onClose: () => void;
+  onPaymentSuccess: () => void;
+  onPaymentClose: () => void;
 };
 
-const Paystack = ({ amount, email, onSuccess, onClose }: Props) => {
-  const client = useClient;
-
-  if (!client) {
-    return null;
-  }
+const Paystack = ({
+  amount,
+  email,
+  onPaymentSuccess,
+  onPaymentClose,
+}: Props) => {
+  const router = useRouter();
 
   const [reference, setReference] = useState('');
 
@@ -28,18 +30,18 @@ const Paystack = ({ amount, email, onSuccess, onClose }: Props) => {
       });
 
       if (response.data.status === 'success') {
-        onSuccess();
+        onPaymentSuccess();
       } else {
-        onClose();
+        onPaymentClose();
       }
     } catch (error) {
       console.error('Error verifying payment:', error);
-      onClose();
+      onPaymentClose();
     }
   };
 
   const handlePaymentClose = () => {
-    onClose();
+    onPaymentClose();
   };
 
   const config = {

@@ -13,30 +13,51 @@ const PaystackCheckout = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const { cartProducts, handleClearCart, cartTotalAmount: amount } = useCart();
+  const router = useRouter();
+
+  const handlePaymentSuccess = () => {
+    toast.success(`Your purchase was successful! `);
+    resetForm();
+    handleClearCart();
+    router.push('/');
+  };
+
+  const handlePaymentClose = () => {
+    resetForm();
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // You can add any form validation logic here
+
+    // Call the Paystack payment API
+    const response = await fetch('/api/paystack/create-payment-intent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: Math.round(amount * 100), // Convert amount to the smallest currency unit (kobo)
+        email,
+        name,
+        phone,
+      }),
+    });
+
+    if (response.ok) {
+      const { data } = await response.json();
+      setReference(data.reference);
+    } else {
+      console.error('Error creating payment intent:', await response.json());
+      toast.error('Something went wrong while creating the payment intent');
+    }
+  };
 
   const resetForm = () => {
     setEmail('');
     setName('');
     setPhone('');
-  };
-  const router = useRouter();
-
-  const componentProps = {
-    email,
-    amount: (amount * 100).toFixed(0),
-    metadata: {
-      name,
-      phone,
-    },
-    publicKey,
-    text: 'Buy Now',
-    onSuccess: () => {
-      toast.success(`Your purchase was successful! `);
-      resetForm();
-      handleClearCart();
-      router.push('/');
-    },
-    onClose: () => {},
   };
 
   return (
@@ -83,7 +104,14 @@ const PaystackCheckout = () => {
                 className="peer w-full p-1 pt-6 outline-none bg-white font-light border-2 rounded-md transition"
               />
             </div>
-            <PaystackButton className="paystack-button" {...componentProps} />
+            <PaystackButton
+              publicKey={publicKey}
+              text="Pay Now"
+              amount={Math.round(amount * 100)} // Convert amount to the smallest currency unit (kobo)
+              email={email}
+              onSuccess={handlePaymentSuccess}
+              onClose={handlePaymentClose}
+            />
           </div>
         </div>
       </div>
@@ -95,5 +123,8 @@ export default PaystackCheckout;
 function createPayment(
   paymentId: any
 ): { data: any } | PromiseLike<{ data: any }> {
+  throw new Error('Function not implemented.');
+}
+function setReference(reference: any) {
   throw new Error('Function not implemented.');
 }

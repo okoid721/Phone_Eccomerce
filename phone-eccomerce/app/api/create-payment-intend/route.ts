@@ -1,8 +1,8 @@
-import Paystack from 'paystack';
 import prisma from '@/libs/prismadb';
 import { NextResponse } from 'next/server';
 import { CartProductType } from '@/app/product/[productId]/ProductDetails';
 import { getCurrentUser } from '@/actions/getCurrentUser';
+import Paystack from 'paystack';
 
 const paystack = new Paystack(process.env.PAYSTACK_SECRET_KEY as string);
 

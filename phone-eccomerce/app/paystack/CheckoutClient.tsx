@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useCart } from '../hooks/useCart';
-import { PaystackButton } from 'react-paystack';
-import Paystack from '../components/PaystackButton';
 import PaystackCheckout from './PaystackCheckout';
 
 const CheckoutClient = () => {
@@ -49,7 +47,7 @@ const CheckoutClient = () => {
           toast.error('Something went wrong');
         });
     }
-  }, [cartProducts, paymentIntent]);
+  }, [cartProducts, paymentIntent, router, handleSetPaymentIntent]);
 
   const handleSetPaymentSuccess = useCallback((value: boolean) => {
     setPaymentSuccess(value);
@@ -62,8 +60,10 @@ const CheckoutClient = () => {
           cartProducts={cartProducts}
           paymentSuccess={paymentSuccess}
           handleSetPaymentSuccess={handleSetPaymentSuccess}
+          onPaymentSuccess={handleSetPaymentSuccess}
+          onPaymentClose={() => setPaymentSuccess(false)}
         />
-      )}{' '}
+      )}
       {loading && <div className="text-center">Loading Checkout....</div>}
       {error && (
         <div className="text-center text-red-500">Something went wrong</div>
