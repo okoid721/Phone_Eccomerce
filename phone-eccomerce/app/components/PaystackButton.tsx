@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useClient } from 'next/client';
+import useClient from 'next/client';
 import { useState } from 'react';
 import { PaystackButton } from 'react-paystack';
 import axios from 'axios';
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Paystack = ({ amount, email, onSuccess, onClose }: Props) => {
-  const client = useClient();
+  const client = useClient;
 
   if (!client) {
     return null;
@@ -52,7 +52,11 @@ const Paystack = ({ amount, email, onSuccess, onClose }: Props) => {
     onClose: handlePaymentClose,
   };
 
-  return <PaystackButton {...config} />;
+  return (
+    <div className=" w-full bg-green-500">
+      <PaystackButton {...config} />
+    </div>
+  );
 };
 
 export default Paystack;

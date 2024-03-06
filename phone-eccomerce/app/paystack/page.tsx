@@ -1,16 +1,14 @@
 import Containers from '../components/Containers';
 import FormWrap from '../components/FormWrap';
-import Paystck from './Paystck';
+import PaystackCheckout from './PaystackCheckout';
 
-const Pay = async () => {
+const Pay = () => {
   return (
-    <>
-      <Containers>
-        <FormWrap>
-          <Paystck />
-        </FormWrap>
-      </Containers>
-    </>
+    <Containers>
+      <FormWrap>
+        <PaystackCheckout />
+      </FormWrap>
+    </Containers>
   );
 };
 
