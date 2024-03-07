@@ -1,5 +1,5 @@
 import prisma from '@/libs/prismadb';
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next';
 import { CartProductType } from '@/app/product/[productId]/ProductDetails';
 import { getCurrentUser } from '@/actions/getCurrentUser';
 import Paystack from 'paystack';
