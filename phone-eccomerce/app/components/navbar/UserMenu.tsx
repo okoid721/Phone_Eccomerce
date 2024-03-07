@@ -9,7 +9,7 @@ import { signOut } from 'next-auth/react';
 import BackDrop from './BackDrop';
 import { useCart } from '@/app/hooks/useCart';
 import { User } from '@prisma/client';
-import { SafeUser } from '@/types';
+import { paystack } from '@/types';
 
 interface UserMenuProps {
   currentUser: SafeUser | null;

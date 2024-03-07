@@ -7,7 +7,13 @@ import Input from '../components/inputs/Input';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-const PaystackCheckout = () => {
+const PaystackCheckout = ({
+  paymentSuccess,
+  handleSetPaymentSuccess,
+}: {
+  paymentSuccess: boolean;
+  handleSetPaymentSuccess: (value: boolean) => void;
+}) => {
   const publicKey = 'pk_test_cbdbef83d1ee1286e06785b2dc77986078a65123';
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -19,7 +25,7 @@ const PaystackCheckout = () => {
     toast.success(`Your purchase was successful! `);
     resetForm();
     handleClearCart();
-    router.push('/');
+    handleSetPaymentSuccess(true);
   };
 
   const handlePaymentClose = () => {
@@ -44,6 +50,7 @@ const PaystackCheckout = () => {
         phone,
       }),
     });
+    console.log(response);
 
     if (response.ok) {
       const { data } = await response.json();
@@ -63,9 +70,6 @@ const PaystackCheckout = () => {
   return (
     <div>
       <div>
-        <div>
-          <p>{formatPrice(amount)}</p>
-        </div>
         <div>
           <div className=" flex gap-2 flex-col">
             <div className=" w-full relative ">
@@ -107,12 +111,16 @@ const PaystackCheckout = () => {
             <PaystackButton
               publicKey={publicKey}
               text="Pay Now"
+              className="bg-[#333] p-3 text-white rounded-md "
               amount={Math.round(amount * 100)} // Convert amount to the smallest currency unit (kobo)
               email={email}
               onSuccess={handlePaymentSuccess}
               onClose={handlePaymentClose}
             />
           </div>
+        </div>
+        <div className="">
+          <p className="text-3xl font-bold text-black">{formatPrice(amount)}</p>
         </div>
       </div>
     </div>
