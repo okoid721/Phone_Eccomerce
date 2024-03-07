@@ -67,6 +67,10 @@ const AddProductForm = () => {
         register={register}
         label="This Product Is In Stock"
       />
+      <div className="w-full font-medium ">
+        <div className=" mb-2 font-bold "></div>
+        <div className="grid grid-cols-2 md:grid-cols-3 max-h-[50vh] overflow-y-auto "></div>
+      </div>
     </>
   );
 };
