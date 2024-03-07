@@ -16,12 +16,12 @@ export async function POST(request: Request) {
     data: {
       name,
       description,
-      price,
       brand,
       category,
       inStock,
       images,
+      price: parseFloat(price),
     },
   });
-  return NextResponse.json(user);
+  return NextResponse.json(product);
 }
