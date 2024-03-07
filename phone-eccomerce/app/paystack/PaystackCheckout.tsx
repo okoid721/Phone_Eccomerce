@@ -6,6 +6,7 @@ import { useCart } from '../hooks/useCart';
 import Input from '../components/inputs/Input';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const PaystackCheckout = ({
   paymentSuccess,
@@ -32,13 +33,13 @@ const PaystackCheckout = ({
     resetForm();
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // You can add any form validation logic here
 
     // Call the Paystack payment API
-    const response = await fetch('/api/paystack/create-payment-intent', {
+    const response: any = axios.post('/api/create-payment-intent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,10 +54,10 @@ const PaystackCheckout = ({
     console.log(response);
 
     if (response.ok) {
-      const { data } = await response.json();
+      const { data } = response.json();
       setReference(data.reference);
     } else {
-      console.error('Error creating payment intent:', await response.json());
+      console.error('Error creating payment intent:', response.json());
       toast.error('Something went wrong while creating the payment intent');
     }
   };
