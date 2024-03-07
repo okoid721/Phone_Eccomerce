@@ -1,5 +1,6 @@
 'use client';
 import Haeding from '@/app/components/Haeding';
+import CustomCheckBox from '@/app/components/inputs/CustomCheckBox';
 import Input from '@/app/components/inputs/Input';
 import TextArea from '@/app/components/inputs/TextArea';
 import React, { useState } from 'react';
@@ -60,6 +61,11 @@ const AddProductForm = () => {
         register={register}
         errors={errors}
         required
+      />
+      <CustomCheckBox
+        id="inStock"
+        register={register}
+        label="This Product Is In Stock"
       />
     </>
   );
