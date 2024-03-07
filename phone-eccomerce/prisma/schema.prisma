@@ -90,6 +90,7 @@ model Payment {
     paymentMethod String
     createdAt     DateTime @default(now())
     email         String
+    reference     String
     name          String
     phone         String
     paystackId    String?

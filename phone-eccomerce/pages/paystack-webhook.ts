@@ -1,7 +1,9 @@
 // pages/api/paystack-webhook.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { verifyWebhook } from '../utils/paystack';
+import prisma from '../libs/prismadb';
+import { Payment } from '.prisma/client';
+import { verifyWebhook } from '@/utils/paystack';
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,15 +12,28 @@ export default async function handler(
   if (req.method === 'POST') {
     try {
       const signature: any = req.headers['x-paystack-signature'];
-      const body = await verifyWebhook(req.body, signature);
+      const body: any = await verifyWebhook(req.body, signature);
 
       // Process the webhook payload here
       console.log('Webhook payload:', body);
 
-      res.status(200).json({ message: 'Webhook received and processed.' });
-
+      // Check if the payment is successful
       if (body.data.status === 'success') {
-        console.log('Payment successful:', body.data);
+        const { reference } = body.data;
+
+        // Update the payment status in MongoDB using Prisma
+        const payment = await prisma.payment.update({
+          where: {
+            reference: {
+              equals: reference,
+            },
+          },
+          data: {
+            status: body.data.status,
+          },
+        });
+
+        console.log('Payment updated in MongoDB:', payment);
         res.status(200).json({ message: 'Webhook received and processed.' });
       } else {
         console.error('Payment failed or unrecognized status:', body.data);
