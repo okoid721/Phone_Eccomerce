@@ -144,6 +144,7 @@ const AddProductForm = () => {
 
     await handleImageUpload();
     const productData = { ...data, images: uploadedImages };
+    console.log('product data', productData);
 
     // axios
     //   .post("/api/product", productData)
