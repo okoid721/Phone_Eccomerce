@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useCart } from '../hooks/useCart';
 import PaystackCheckout from './PaystackCheckout';
 import Button from '../components/Button';
+import axios from 'axios';
 
 const CheckoutClient = () => {
   const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
@@ -23,24 +24,18 @@ const CheckoutClient = () => {
       setLoading(true);
       setError(false);
 
-      fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: cartProducts,
-          payment_intent_id: paymentIntent,
-        }),
-      })
-        .then((res) => {
-          setLoading(false);
-          if (res.status === 401) {
-            return router.push('/login');
-          }
-          return res.json();
+      axios
+        .post('/api/create-payment-intent', { status, currency: 'NGN' })
+        .then(() => {
+          toast.success('Product created');
+          setPaymentSuccess(true);
+          router.refresh();
         })
-        .then((data) => {
-          setClientSecret(data.paymentIntent.client_secret);
-          handleSetPaymentIntent(data.paymentIntent.id);
+        .catch((error) => {
+          toast.error('Something went wrong saving the product to the db');
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   }, [cartProducts, paymentIntent, router, handleSetPaymentIntent]);

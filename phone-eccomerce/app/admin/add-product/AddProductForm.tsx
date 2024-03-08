@@ -18,6 +18,8 @@ import {
   ref,
   uploadBytesResumable,
 } from 'firebase/storage';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export type ImageType = {
   color: string;
@@ -35,6 +37,8 @@ const AddProductForm = () => {
   const [images, setImages] = useState<ImageType[] | null>(null);
 
   const [isProductCreated, setIsProductCreated] = useState(false);
+
+  const router = useRouter();
 
   const {
     register,
@@ -146,19 +150,19 @@ const AddProductForm = () => {
     const productData = { ...data, images: uploadedImages };
     console.log('product data', productData);
 
-    // axios
-    //   .post("/api/product", productData)
-    //   .then(() => {
-    //     toast.success("Product created");
-    //     setIsProductCreated(true);
-    //     router.refresh();
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Something went wrong saving the product to the db");
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    axios
+      .post('/api/product', productData)
+      .then(() => {
+        toast.success('Product created');
+        setIsProductCreated(true);
+        router.refresh();
+      })
+      .catch((error) => {
+        toast.error('Something went wrong saving the product to the db');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const category = watch('category');
@@ -288,3 +292,5 @@ const AddProductForm = () => {
     </>
   );
 };
+
+export default AddProductForm;

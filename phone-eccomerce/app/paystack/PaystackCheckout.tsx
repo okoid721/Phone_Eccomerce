@@ -39,27 +39,20 @@ const PaystackCheckout = ({
     // You can add any form validation logic here
 
     // Call the Paystack payment API
-    const response: any = axios.post('/api/create-payment-intent', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        amount: Math.round(amount * 100), // Convert amount to the smallest currency unit (kobo)
-        email,
-        name,
-        phone,
-      }),
-    });
-    console.log(response);
 
-    if (response.ok) {
-      const { data } = response.json();
-      setReference(data.reference);
-    } else {
-      console.error('Error creating payment intent:', response.json());
-      toast.error('Something went wrong while creating the payment intent');
-    }
+    axios
+      .post('/api/create-payment-intent', { amount, status, currency: 'NGN' })
+      .then(() => {
+        toast.success('Product created');
+        handlePaymentSuccess();
+        router.refresh();
+      })
+      .catch((error) => {
+        toast.error('Something went wrong saving the product to the db');
+      })
+      .finally(() => {
+        handlePaymentClose();
+      });
   };
 
   const resetForm = () => {
