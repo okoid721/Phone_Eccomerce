@@ -5,8 +5,20 @@ import CustomCheckBox from '@/app/components/inputs/CustomCheckBox';
 import Input from '@/app/components/inputs/Input';
 import TextArea from '@/app/components/inputs/TextArea';
 import { categories } from '@/utils/Categorise';
+import { colors } from '@/utils/Colors';
 import React, { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+
+export type ImageType = {
+  color: string;
+  colorCode: string;
+  image: File | null;
+};
+export type UploadedImageType = {
+  color: string;
+  colorCode: string;
+  image: string;
+};
 
 const AddProductForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +94,7 @@ const AddProductForm = () => {
       />
       <div className="w-full font-medium ">
         <div className=" mb-2 font-bold "></div>
-        <div className="grid grid-cols-2 md:grid-cols-3 max-h-[50vh] overflow-y-auto ">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[50vh] overflow-y-auto ">
           {categories.map((item) => {
             if (item.label === 'ALL') {
               return null;
@@ -97,6 +109,22 @@ const AddProductForm = () => {
                 />
               </div>
             );
+          })}
+        </div>
+      </div>
+      <div className="w-full flex flex-col flex-wrap gap-4">
+        <div>
+          <div className="font-bold">
+            Select The Available colors and upload their images
+          </div>
+          <div>
+            You Must upload an Image for each of the color selected otherwise
+            your color selection will be ignored
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3 ">
+          {colors.map((item, index) => {
+            return <></>;
           })}
         </div>
       </div>
