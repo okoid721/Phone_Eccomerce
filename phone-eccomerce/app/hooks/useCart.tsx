@@ -57,9 +57,9 @@ export const CartContextProvider = (props: Props) => {
       if (cartProducts) {
         const { total, qty } = cartProducts?.reduce(
           (acc, item) => {
-            const itemTotal = item.price * item.quantity;
+            const itemTotal = item.price * item.qauntity;
             acc.total += itemTotal;
-            acc.qty += item.quantity;
+            acc.qty += item.qauntity;
 
             return acc;
           },
@@ -119,7 +119,7 @@ export const CartContextProvider = (props: Props) => {
     (product: CartProductType) => {
       let updatedCart;
 
-      if (product.quantity === 99) {
+      if (product.qauntity === 99) {
         return toast.error('Ooop Maximum Reached');
       }
       if (cartProducts) {
@@ -130,8 +130,8 @@ export const CartContextProvider = (props: Props) => {
         );
 
         if (existingIndex > -1) {
-          updatedCart[existingIndex].quantity = ++updatedCart[existingIndex]
-            .quantity;
+          updatedCart[existingIndex].qauntity = ++updatedCart[existingIndex]
+            .qauntity;
         }
         setCartProducts(updatedCart);
         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
@@ -144,7 +144,7 @@ export const CartContextProvider = (props: Props) => {
     (product: CartProductType) => {
       let updatedCart;
 
-      if (product.quantity === 1) {
+      if (product.qauntity === 1) {
         return toast.error('Ooop Maximum Reached');
       }
       if (cartProducts) {
@@ -155,8 +155,8 @@ export const CartContextProvider = (props: Props) => {
         );
 
         if (existingIndex > -1) {
-          updatedCart[existingIndex].quantity = --updatedCart[existingIndex]
-            .quantity;
+          updatedCart[existingIndex].qauntity = --updatedCart[existingIndex]
+            .qauntity;
         }
         setCartProducts(updatedCart);
         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
@@ -261,9 +261,9 @@ export const useCart = () => {
 //       if (cartProducts) {
 //         const { total, qty } = cartProducts?.reduce(
 //           (acc, item) => {
-//             const itemTotal = item.price * item.quantity;
+//             const itemTotal = item.price * item.qauntity;
 //             acc.total += itemTotal;
-//             acc.qty += item.quantity;
+//             acc.qty += item.qauntity;
 
 //             return acc;
 //           },
@@ -331,7 +331,7 @@ export const useCart = () => {
 //     (product: CartProductType) => {
 //       let updatedCart;
 
-//       if (product.quantity === 99) {
+//       if (product.qauntity === 99) {
 //         return toast.error('Ooop Maximum Reached');
 //       }
 //       if (cartProducts) {
@@ -342,8 +342,8 @@ export const useCart = () => {
 //         );
 
 //         if (existingIndex > -1) {
-//           updatedCart[existingIndex].quantity = ++updatedCart[existingIndex]
-//             .quantity;
+//           updatedCart[existingIndex].qauntity = ++updatedCart[existingIndex]
+//             .qauntity;
 //         }
 //         setCartProducts(updatedCart);
 //         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
@@ -356,7 +356,7 @@ export const useCart = () => {
 //     (product: CartProductType) => {
 //       let updatedCart;
 
-//       if (product.quantity === 1) {
+//       if (product.qauntity === 1) {
 //         return toast.error('Ooop Maximum Reached');
 //       }
 //       if (cartProducts) {
@@ -367,8 +367,8 @@ export const useCart = () => {
 //         );
 
 //         if (existingIndex > -1) {
-//           updatedCart[existingIndex].quantity = --updatedCart[existingIndex]
-//             .quantity;
+//           updatedCart[existingIndex].qauntity = --updatedCart[existingIndex]
+//             .qauntity;
 //         }
 //         setCartProducts(updatedCart);
 //         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));

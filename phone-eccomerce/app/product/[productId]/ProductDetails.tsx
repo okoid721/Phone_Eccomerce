@@ -3,7 +3,7 @@ import Button from '@/app/components/Button';
 import Delivery from '@/app/components/Delivery';
 import ProductImage from '@/app/components/products/ProductImage';
 import SetColor from '@/app/components/products/SetColor';
-import SetQuantity from '@/app/components/products/SetQuantity';
+import Setqauntity from '@/app/components/products/Setqauntity';
 import { Rating } from '@mui/material';
 import { useCart } from '@/app/hooks/useCart';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -21,7 +21,7 @@ export type CartProductType = {
   category: string;
   brand: string;
   selectedImg: SelectedImgType;
-  quantity: number;
+  qauntity: number;
   price: number;
 };
 export type SelectedImgType = {
@@ -44,7 +44,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     category: product.category,
     brand: product.brand,
     selectedImg: { ...product.images[0] },
-    quantity: 0,
+    qauntity: 0,
     price: product.price,
   });
 
@@ -83,20 +83,20 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   );
 
   const handleQtyIncrease = useCallback(() => {
-    if (cartProduct.quantity === 99) {
+    if (cartProduct.qauntity === 99) {
       return;
     }
     setCartProduct((prev) => {
-      return { ...prev, quantity: prev.quantity + 1 };
+      return { ...prev, qauntity: prev.qauntity + 1 };
     });
   }, [cartProduct]);
 
   const handleQtyDecrease = useCallback(() => {
-    if (cartProduct.quantity === 1) {
+    if (cartProduct.qauntity === 1) {
       return;
     }
     setCartProduct((prev) => {
-      return { ...prev, quantity: prev.quantity - 1 };
+      return { ...prev, qauntity: prev.qauntity - 1 };
     });
   }, [cartProduct]);
 
@@ -155,7 +155,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
                 handleColorSelect={handleColorSelect}
               />
               <Horizontal />
-              <SetQuantity
+              <Setqauntity
                 cartProduct={cartProduct}
                 handleQtyIncrease={handleQtyIncrease}
                 handleQtyDecrease={handleQtyDecrease}
