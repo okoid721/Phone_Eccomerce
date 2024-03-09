@@ -5,7 +5,7 @@ export interface IProductParams {
   searchTerm?: string | null;
 }
 
-export default async function getProducts(params: IProductParams) {
+export default async function getproduct(params: IProductParams) {
   try {
     const { category, searchTerm } = params;
     let searchString = searchTerm;
@@ -19,7 +19,7 @@ export default async function getProducts(params: IProductParams) {
       query.category = category;
     }
 
-    const products = await prisma.product.findMany({
+    const product = await prisma.product.findMany({
       where: {
         ...query,
         OR: [
@@ -47,7 +47,7 @@ export default async function getProducts(params: IProductParams) {
       },
     });
 
-    return products;
+    return product;
   } catch (error: any) {
     throw new Error(error);
   }

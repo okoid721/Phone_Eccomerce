@@ -13,7 +13,7 @@ type CartContextType = {
   cartTotalAmount: number;
   cartTotalQty: number;
   isLoggedIn: boolean;
-  cartProducts: CartProductType[] | null;
+  cartproduct: CartProductType[] | null;
   handleAddProductToCart: (product: CartProductType) => void;
   handleRemoveProductFromCart: (product: CartProductType) => void;
   handleCartQtyIncrease: (product: CartProductType) => void;
@@ -35,27 +35,27 @@ export const CartContextProvider = (props: Props) => {
   const [cartTotalAmount, setCartTotalAmount] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Initially false
 
-  const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
+  const [cartproduct, setCartproduct] = useState<CartProductType[] | null>(
     null
   );
   const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
 
   useEffect(() => {
     const cartItems: any = localStorage.getItem('kingsMobile');
-    const cProducts: CartProductType[] | null = JSON.parse(cartItems);
+    const cproduct: CartProductType[] | null = JSON.parse(cartItems);
     const kingsMobilePaymentIntent: any = localStorage.getItem(
       'kingsMobilePaymentIntent'
     );
     const paymentIntent: string | null = JSON.parse(kingsMobilePaymentIntent);
 
-    setCartProducts(cProducts);
+    setCartproduct(cproduct);
     setPaymentIntent(paymentIntent);
   }, []);
 
   useEffect(() => {
     const getTotals = () => {
-      if (cartProducts) {
-        const { total, qty } = cartProducts?.reduce(
+      if (cartproduct) {
+        const { total, qty } = cartproduct?.reduce(
           (acc, item) => {
             const itemTotal = item.price * item.qauntity;
             acc.total += itemTotal;
@@ -74,7 +74,7 @@ export const CartContextProvider = (props: Props) => {
       }
     };
     getTotals();
-  }, [cartProducts]);
+  }, [cartproduct]);
 
   const handlesetIsLoggedIn = () => {
     if (isLoggedIn === false) {
@@ -85,7 +85,7 @@ export const CartContextProvider = (props: Props) => {
   };
 
   const handleAddProductToCart = useCallback((product: CartProductType) => {
-    setCartProducts((prev) => {
+    setCartproduct((prev) => {
       let updatedCart;
       if (prev) {
         updatedCart = [...prev, product];
@@ -102,17 +102,17 @@ export const CartContextProvider = (props: Props) => {
   const handleRemoveProductFromCart = useCallback(
     (product: CartProductType) => {
       //let updatedCart;
-      if (cartProducts) {
-        const filteredProducts = cartProducts.filter((item) => {
+      if (cartproduct) {
+        const filteredproduct = cartproduct.filter((item) => {
           return item.id !== product.id;
         });
 
-        setCartProducts(filteredProducts);
+        setCartproduct(filteredproduct);
         toast.success('You have successfully removed a product from your cart');
-        localStorage.setItem('kingsMobile', JSON.stringify(filteredProducts));
+        localStorage.setItem('kingsMobile', JSON.stringify(filteredproduct));
       }
     },
-    [cartProducts]
+    [cartproduct]
   );
 
   const handleCartQtyIncrease = useCallback(
@@ -122,10 +122,10 @@ export const CartContextProvider = (props: Props) => {
       if (product.qauntity === 99) {
         return toast.error('Ooop Maximum Reached');
       }
-      if (cartProducts) {
-        updatedCart = [...cartProducts];
+      if (cartproduct) {
+        updatedCart = [...cartproduct];
 
-        const existingIndex = cartProducts.findIndex(
+        const existingIndex = cartproduct.findIndex(
           (item) => item.id === product.id
         );
 
@@ -133,11 +133,11 @@ export const CartContextProvider = (props: Props) => {
           updatedCart[existingIndex].qauntity = ++updatedCart[existingIndex]
             .qauntity;
         }
-        setCartProducts(updatedCart);
+        setCartproduct(updatedCart);
         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
       }
     },
-    [cartProducts]
+    [cartproduct]
   );
 
   const handleCartQtyDecrease = useCallback(
@@ -147,10 +147,10 @@ export const CartContextProvider = (props: Props) => {
       if (product.qauntity === 1) {
         return toast.error('Ooop Maximum Reached');
       }
-      if (cartProducts) {
-        updatedCart = [...cartProducts];
+      if (cartproduct) {
+        updatedCart = [...cartproduct];
 
-        const existingIndex = cartProducts.findIndex(
+        const existingIndex = cartproduct.findIndex(
           (item) => item.id === product.id
         );
 
@@ -158,19 +158,19 @@ export const CartContextProvider = (props: Props) => {
           updatedCart[existingIndex].qauntity = --updatedCart[existingIndex]
             .qauntity;
         }
-        setCartProducts(updatedCart);
+        setCartproduct(updatedCart);
         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
       }
     },
-    [cartProducts]
+    [cartproduct]
   );
 
   const handleClearCart = useCallback(() => {
-    setCartProducts(null);
+    setCartproduct(null);
     setCartTotalQty(0);
     toast.success('Your cart has been cleared successfully');
     localStorage.setItem('kinsMobile', JSON.stringify(null));
-  }, [cartProducts]);
+  }, [cartproduct]);
 
   const handleSetPaymentIntent = useCallback(
     (val: string | null) => {
@@ -183,7 +183,7 @@ export const CartContextProvider = (props: Props) => {
   const value = {
     cartTotalQty,
     cartTotalAmount,
-    cartProducts,
+    cartproduct,
     handleAddProductToCart,
     handleRemoveProductFromCart,
     handleCartQtyIncrease,
@@ -222,7 +222,7 @@ export const useCart = () => {
 // type CartContextType = {
 //   cartTotalAmount: number;
 //   cartTotalQty: number;
-//   cartProducts: CartProductType[] | null;
+//   cartproduct: CartProductType[] | null;
 //   handleAddProductToCart: (product: CartProductType) => void;
 //   handleRemoveProductFromCart: (product: CartProductType) => void;
 //   handleCartQtyIncrease: (product: CartProductType) => void;
@@ -241,7 +241,7 @@ export const useCart = () => {
 // export const CartContextProvider = (props: Props) => {
 //   const [cartTotalQty, setCartTotalQty] = useState(0);
 //   const [cartTotalAmount, setCartTotalAmount] = useState(0);
-//   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
+//   const [cartproduct, setCartproduct] = useState<CartProductType[] | null>(
 //     null
 //   );
 //   const [isLoggedIn, setIsLoggedIn] = useState(true); // Initially false
@@ -251,15 +251,15 @@ export const useCart = () => {
 
 //   useEffect(() => {
 //     const cartItems: any = localStorage.getItem('kingsMobile');
-//     const cProducts: CartProductType[] | null = JSON.parse(cartItems);
+//     const cproduct: CartProductType[] | null = JSON.parse(cartItems);
 
-//     setCartProducts(cProducts);
+//     setCartproduct(cproduct);
 //   }, []);
 
 //   useEffect(() => {
 //     const getTotals = () => {
-//       if (cartProducts) {
-//         const { total, qty } = cartProducts?.reduce(
+//       if (cartproduct) {
+//         const { total, qty } = cartproduct?.reduce(
 //           (acc, item) => {
 //             const itemTotal = item.price * item.qauntity;
 //             acc.total += itemTotal;
@@ -278,7 +278,7 @@ export const useCart = () => {
 //       }
 //     };
 //     getTotals();
-//   }, [cartProducts]);
+//   }, [cartproduct]);
 
 //   const handlesetIsLoggedIn = () => {
 //     if (isLoggedIn === false) {
@@ -289,7 +289,7 @@ export const useCart = () => {
 //   };
 
 //   const handleAddProductToCart = useCallback((product: CartProductType) => {
-//     setCartProducts((prev) => {
+//     setCartproduct((prev) => {
 //       let updatedCart;
 //       if (prev) {
 //         updatedCart = [...prev, product];
@@ -306,17 +306,17 @@ export const useCart = () => {
 //   const handleRemoveProductFromCart = useCallback(
 //     (product: CartProductType) => {
 //       //let updatedCart;
-//       if (cartProducts) {
-//         const filteredProducts = cartProducts.filter((item) => {
+//       if (cartproduct) {
+//         const filteredproduct = cartproduct.filter((item) => {
 //           return item.id !== product.id;
 //         });
 
-//         setCartProducts(filteredProducts);
+//         setCartproduct(filteredproduct);
 //         toast.success('Product Removed');
-//         localStorage.setItem('kingsMobile', JSON.stringify(filteredProducts));
+//         localStorage.setItem('kingsMobile', JSON.stringify(filteredproduct));
 //       }
 //     },
-//     [cartProducts]
+//     [cartproduct]
 //   );
 
 //   const handlesetIsLoggedIn = () => {
@@ -334,10 +334,10 @@ export const useCart = () => {
 //       if (product.qauntity === 99) {
 //         return toast.error('Ooop Maximum Reached');
 //       }
-//       if (cartProducts) {
-//         updatedCart = [...cartProducts];
+//       if (cartproduct) {
+//         updatedCart = [...cartproduct];
 
-//         const existingIndex = cartProducts.findIndex(
+//         const existingIndex = cartproduct.findIndex(
 //           (item) => item.id === product.id
 //         );
 
@@ -345,11 +345,11 @@ export const useCart = () => {
 //           updatedCart[existingIndex].qauntity = ++updatedCart[existingIndex]
 //             .qauntity;
 //         }
-//         setCartProducts(updatedCart);
+//         setCartproduct(updatedCart);
 //         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
 //       }
 //     },
-//     [cartProducts]
+//     [cartproduct]
 //   );
 
 //   const handleCartQtyDecrease = useCallback(
@@ -359,10 +359,10 @@ export const useCart = () => {
 //       if (product.qauntity === 1) {
 //         return toast.error('Ooop Maximum Reached');
 //       }
-//       if (cartProducts) {
-//         updatedCart = [...cartProducts];
+//       if (cartproduct) {
+//         updatedCart = [...cartproduct];
 
-//         const existingIndex = cartProducts.findIndex(
+//         const existingIndex = cartproduct.findIndex(
 //           (item) => item.id === product.id
 //         );
 
@@ -370,23 +370,23 @@ export const useCart = () => {
 //           updatedCart[existingIndex].qauntity = --updatedCart[existingIndex]
 //             .qauntity;
 //         }
-//         setCartProducts(updatedCart);
+//         setCartproduct(updatedCart);
 //         localStorage.setItem('kingsMobile', JSON.stringify(updatedCart));
 //       }
 //     },
-//     [cartProducts]
+//     [cartproduct]
 //   );
 
 //   const handleClearCart = useCallback(() => {
-//     setCartProducts(null);
+//     setCartproduct(null);
 //     setCartTotalQty(0);
 //     localStorage.setItem('kingsMobile', JSON.stringify(null));
-//   }, [cartProducts]);
+//   }, [cartproduct]);
 
 //   const value = {
 //     cartTotalQty,
 //     cartTotalAmount,
-//     cartProducts,
+//     cartproduct,
 //     handleAddProductToCart,
 //     handleRemoveProductFromCart,
 //     handleCartQtyIncrease,

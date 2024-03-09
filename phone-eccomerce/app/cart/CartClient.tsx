@@ -19,10 +19,10 @@ interface CartClientProps {
 
 const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
   const router = useRouter();
-  const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
+  const { cartproduct, handleClearCart, cartTotalAmount } = useCart();
   const [checkoutClicked, setCheckoutClicked] = useState(false);
 
-  if (!cartProducts || cartProducts.length === 0) {
+  if (!cartproduct || cartproduct.length === 0) {
     return (
       <div className=" flex flex-col items-center">
         <div className=" text-2xl">Your cart is empty</div>
@@ -63,8 +63,8 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
           </div>
 
           <div>
-            {cartProducts &&
-              cartProducts.map((item) => {
+            {cartproduct &&
+              cartproduct.map((item) => {
                 return <ItemContent key={item.id} item={item} />;
               })}
           </div>

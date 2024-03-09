@@ -9,7 +9,7 @@ import Button from '../components/Button';
 import axios from 'axios';
 
 const CheckoutClient = () => {
-  const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
+  const { cartproduct, paymentIntent, handleSetPaymentIntent } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [clientSecret, setClientSecret] = useState('');
@@ -20,7 +20,7 @@ const CheckoutClient = () => {
   console.log('clientSecret', clientSecret);
 
   useEffect(() => {
-    if (cartProducts) {
+    if (cartproduct) {
       setLoading(true);
       setError(false);
 
@@ -38,7 +38,7 @@ const CheckoutClient = () => {
           setLoading(false);
         });
     }
-  }, [cartProducts, paymentIntent, router, handleSetPaymentIntent]);
+  }, [cartproduct, paymentIntent, router, handleSetPaymentIntent]);
 
   const handleSetPaymentSuccess = useCallback((value: boolean) => {
     setPaymentSuccess(value);
@@ -46,9 +46,9 @@ const CheckoutClient = () => {
 
   return (
     <div className="">
-      {cartProducts && (
+      {cartproduct && (
         <PaystackCheckout
-          cartProducts={cartProducts}
+          cartproduct={cartproduct}
           paymentSuccess={paymentSuccess}
           handleSetPaymentSuccess={handleSetPaymentSuccess}
           onPaymentSuccess={handleSetPaymentSuccess}

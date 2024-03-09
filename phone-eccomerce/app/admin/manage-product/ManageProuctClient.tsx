@@ -23,19 +23,19 @@ import Haeding from '@/app/components/Haeding';
 import Status from '@/app/components/Status';
 import ActionBtn from '@/app/components/ActionBtn';
 
-interface ManageProductsClientProps {
-  products: Product[];
+interface ManageproductClientProps {
+  product: Product[];
 }
 
-const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
-  products,
+const ManageproductClient: React.FC<ManageproductClientProps> = ({
+  product,
 }) => {
   const router = useRouter();
   const storage = getStorage(firebaseApp);
   let rows: any = [];
 
-  if (products) {
-    rows = products.map((product) => {
+  if (product) {
+    rows = product.map((product) => {
       return {
         id: product.id,
         name: product.name,
@@ -168,7 +168,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   return (
     <div className=" max-w-[1200px] mx-auto text-xl">
       <div className=" mb-4 mt-8">
-        <Haeding title="Manange Products" />
+        <Haeding title="Manange product" />
       </div>
 
       <div style={{ height: 600, width: '100%' }}>
@@ -189,4 +189,4 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   );
 };
 
-export default ManageProductsClient;
+export default ManageproductClient;

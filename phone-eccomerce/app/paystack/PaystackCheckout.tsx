@@ -19,7 +19,7 @@ const PaystackCheckout = ({
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const { cartProducts, handleClearCart, cartTotalAmount: amount } = useCart();
+  const { cartproduct, handleClearCart, cartTotalAmount: amount } = useCart();
   const router = useRouter();
 
   const handlePaymentSuccess = () => {

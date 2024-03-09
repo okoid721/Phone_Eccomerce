@@ -11,7 +11,7 @@ interface SetQtyProps {
 
 const btnStyle = 'border-[1.2px] border-slate-300 px-2 rounded';
 
-const Setqauntity: React.FC<SetQtyProps> = ({
+const SetQauntity: React.FC<SetQtyProps> = ({
   cartProduct,
   cartCounter,
   handleQtyDecrease,
@@ -33,4 +33,4 @@ const Setqauntity: React.FC<SetQtyProps> = ({
   );
 };
 
-export default Setqauntity;
+export default SetQauntity;

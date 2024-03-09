@@ -1,9 +1,9 @@
 'use client';
 import Button from '@/app/components/Button';
 import Delivery from '@/app/components/Delivery';
-import ProductImage from '@/app/components/products/ProductImage';
-import SetColor from '@/app/components/products/SetColor';
-import Setqauntity from '@/app/components/products/Setqauntity';
+import ProductImage from '@/app/components/product/ProductImage';
+import SetColor from '@/app/components/product/SetColor';
+import Setqauntity from '@/app/components/product/Setqauntity';
 import { Rating } from '@mui/material';
 import { useCart } from '@/app/hooks/useCart';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -35,7 +35,7 @@ const Horizontal = () => {
 };
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
-  const { handleAddProductToCart, cartProducts } = useCart();
+  const { handleAddProductToCart, cartproduct } = useCart();
   const [isProductInCart, setIsProductInCart] = useState(false);
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
@@ -50,13 +50,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
   const router = useRouter();
 
-  console.log(cartProducts);
+  console.log(cartproduct);
 
   useEffect(() => {
     setIsProductInCart(false);
 
-    if (cartProducts) {
-      const existingIndex = cartProducts.findIndex(
+    if (cartproduct) {
+      const existingIndex = cartproduct.findIndex(
         (item) => item.id === product.id
       );
 
@@ -64,7 +64,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         setIsProductInCart(true);
       }
     }
-  }, [cartProducts]);
+  }, [cartproduct]);
 
   const productRating =
     product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { products } from '@/utils/products';
+import { product } from '@/utils/product';
 import Containers from './components/Containers';
 import HomeBanner from './components/HomeBanner';
 import { truncate } from 'fs';
@@ -14,7 +14,7 @@ export default function Home() {
           <HomeBanner />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-          {products.map((product: any) => {
+          {product.map((product: any) => {
             return <ProductCard data={product} />;
           })}
         </div>

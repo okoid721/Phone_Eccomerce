@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     status: 'pending',
     deliveryStatus: 'pending',
     paymentIntentId: payment_intent_id,
-    products: items,
+    product: items,
   };
   if (payment_intent_id) {
     //update payment
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
           where: { paymentIntentId: payment_intent_id },
           data: {
             amount: total,
-            products: items,
+            product: items,
           },
         }),
       ]);

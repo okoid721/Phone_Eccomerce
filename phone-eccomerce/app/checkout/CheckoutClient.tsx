@@ -15,7 +15,7 @@ const stripePromise = loadStripe(
 );
 
 const CheckoutClient = () => {
-  const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
+  const { cartproduct, paymentIntent, handleSetPaymentIntent } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [clientSecret, setClientSecret] = useState('');
@@ -27,7 +27,7 @@ const CheckoutClient = () => {
   console.log('clientSecret', clientSecret);
 
   useEffect(() => {
-    if (cartProducts) {
+    if (cartproduct) {
       setLoading(true);
       setError(false);
 
@@ -35,7 +35,7 @@ const CheckoutClient = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: cartProducts,
+          items: cartproduct,
           payment_intent_id: paymentIntent,
         }),
       })
@@ -56,7 +56,7 @@ const CheckoutClient = () => {
           toast.error('something went wrong');
         });
     }
-  }, [cartProducts, paymentIntent]);
+  }, [cartproduct, paymentIntent]);
 
   const options: StripeElementsOptions = {
     clientSecret,
@@ -72,7 +72,7 @@ const CheckoutClient = () => {
   return (
     <>
       <div className=" w-full">
-        {clientSecret && cartProducts && (
+        {clientSecret && cartproduct && (
           <Elements options={options} stripe={stripePromise}>
             <CheckOutForm
               clientSecret={clientSecret}

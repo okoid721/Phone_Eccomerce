@@ -1,7 +1,7 @@
 import Containers from '@/app/components/Containers';
 import ProductDetails from './ProductDetails';
 import ListRating from './ListRating';
-import { products } from '@/utils/products';
+import { product } from '@/utils/product';
 
 interface IPrams {
   productId?: string;
@@ -10,7 +10,7 @@ interface IPrams {
 const Product = ({ params }: { params: IPrams }) => {
   console.log('params', params);
 
-  const product = products.find((item) => item.id === params.productId);
+  const product = product.find((item) => item.id === params.productId);
 
   return (
     <div className=" p-0 pt-5">
