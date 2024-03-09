@@ -92,10 +92,10 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
     {
       field: 'action',
       headerName: 'Actions',
-      width: 240,
+      width: 215,
       renderCell: (params) => {
         return (
-          <div className="flex justify-between gap-4 w-full">
+          <div className="flex justify-between gap-2 w-full">
             <ActionBtn
               icon={MdCached}
               onClick={() => {
@@ -166,7 +166,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
       });
   }, []);
   return (
-    <div className=" max-w-[1150px] m-auto text-xl">
+    <div className=" max-w-[1200px] mx-auto text-xl">
       <div className=" mb-4 mt-8">
         <Haeding title="Manange Products" />
       </div>

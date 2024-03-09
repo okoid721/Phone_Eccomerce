@@ -42,16 +42,16 @@ model User {
 }
 
 model Order {
-    id             String            @id @default(auto()) @map("_id") @db.ObjectId
-    userId         String            @db.ObjectId
-    amount         Float
-    currency       String
-    status         String
-    deliveryStatus String?
-    createdDate    DateTime          @default(now())
-    paystackId     String            @unique // Here is the paystackId field
-    products       CartProductType[]
-    address        Address?
+    id              String            @id @default(auto()) @map("_id") @db.ObjectId
+    userId          String            @db.ObjectId
+    amount          Float
+    currency        String
+    status          String
+    deliveryStatus  String?
+    createdDate     DateTime          @default(now())
+    paymentIntentId String            @unique
+    products        CartProductType[]
+    address         Address?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -63,7 +63,7 @@ type CartProductType {
     category    String
     brand       String
     selectedImg Image
-    quantity    Int
+    qauntity    Int
     price       Float
 }
 

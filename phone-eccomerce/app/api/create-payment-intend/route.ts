@@ -1,66 +1,83 @@
-// pages/api/paystack-payment.ts
-
-// import { NextApiRequest, NextApiResponse } from 'next';
-// import prisma from '@/libs/prismadb';
-// import { Payment } from '.prisma/client';
-
-// export default async function handler(
-//   req: NextApiRequest,
-//   res: NextApiResponse
-// ) {
-//   if (req.method === 'POST') {
-//     try {
-//       const { reference, amount, currency, status } = req.body;
-
-//       if (!reference || !amount || !currency || !status) {
-//         return res.status(400).json({ message: 'Missing required fields.' });
-//       }
-
-//       // Create a new Payment record in MongoDB using Prisma
-//       const payment = await prisma.payment.create({
-//         data: {
-//           reference,
-//           amount,
-//           currency,
-//           status,
-//         },
-//       });
-
-//       console.log('Payment saved to MongoDB:', payment);
-
-//       res.status(200).json({ message: 'Payment processed successfully.' });
-//     } catch (error) {
-//       console.error('Error processing payment:', error);
-//       res.status(500).json({ message: 'Failed to process payment.' });
-//     }
-//   } else {
-//     res.status(405).json({ message: 'Method not allowed.' });
-//   }
-// }
-
+import Stripe from 'stripe';
 import prisma from '@/libs/prismadb';
 import { NextResponse } from 'next/server';
+import { CartProductType } from '@/app/product/[productId]/ProductDetails';
 import { getCurrentUser } from '@/actions/getCurrentUser';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2023-10-16',
+});
+
+const calculateOrderAmount = (items: CartProductType[]) => {
+  const totalPrice = items.reduce((acc, item) => {
+    const itemTotal = item.price * item.quantity;
+    return acc + itemTotal;
+  }, 0);
+  return totalPrice;
+};
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
-
-  if (!currentUser || currentUser.role !== 'USER' || 'ADMIN') {
-    return NextResponse.error();
+  if (!currentUser) {
+    return NextResponse.json({ error: 'Unauthorized ' }, { status: 401 });
   }
 
   const body = await request.json();
-  const { reference, amount, currency, status } = body;
-
+  const { items, payment_intent_id } = body;
+  const total = calculateOrderAmount(items) * 100;
   const orderData = {
     user: { connect: { id: currentUser.id } },
-    currency,
-    status,
-    amount,
+    amount: total,
+    currency: 'usd',
+    status: 'pending',
+    deliveryStatus: 'pending',
+    paymentIntentId: payment_intent_id,
+    products: items,
   };
+  if (payment_intent_id) {
+    //update payment
+    const current_intent = await stripe.paymentIntents.retrieve(
+      payment_intent_id
+    );
 
-  const payment = await prisma.payment.create({
-    data: orderData,
-  });
-  return NextResponse.json(payment);
+    if (current_intent) {
+      const updated_intent = await stripe.paymentIntents.update(
+        payment_intent_id,
+        { amount: total }
+      );
+
+      //update the order
+
+      const [existing_order, update_order] = await Promise.all([
+        prisma.order.findFirst({
+          where: { paymentIntentId: payment_intent_id },
+        }),
+        prisma.order.update({
+          where: { paymentIntentId: payment_intent_id },
+          data: {
+            amount: total,
+            products: items,
+          },
+        }),
+      ]);
+      if (!existing_order) {
+        return NextResponse.json({ error: 'Invalid intent ' }, { status: 400 });
+      }
+      return NextResponse.json({ paymentIntent: updated_intent });
+    }
+  } else {
+    // create the intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: total,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+    });
+    //create the order
+    orderData.paymentIntentId = paymentIntent.id;
+
+    await prisma.order.create({
+      data: orderData,
+    });
+    return NextResponse.json({ paymentIntent });
+  }
 }
