@@ -1,14 +1,14 @@
 'use client';
 import Button from '@/app/components/Button';
 import Delivery from '@/app/components/Delivery';
-import ProductImage from '@/app/components/product/ProductImage';
-import SetColor from '@/app/components/product/SetColor';
-import Setqauntity from '@/app/components/product/Setqauntity';
 import { Rating } from '@mui/material';
 import { useCart } from '@/app/hooks/useCart';
 import React, { useCallback, useEffect, useState } from 'react';
 import { MdCheckCircle } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
+import SetColor from '@/app/components/products/SetColor';
+import SetQauntity from '@/app/components/products/SetQuantity';
+import ProductImage from '@/app/components/products/ProductImage';
 
 interface ProductDetailsProps {
   product: any;
@@ -155,7 +155,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
                 handleColorSelect={handleColorSelect}
               />
               <Horizontal />
-              <Setqauntity
+              <SetQauntity
                 cartProduct={cartProduct}
                 handleQtyIncrease={handleQtyIncrease}
                 handleQtyDecrease={handleQtyDecrease}

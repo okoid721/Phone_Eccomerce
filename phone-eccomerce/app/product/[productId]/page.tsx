@@ -1,23 +1,30 @@
-import Containers from '@/app/components/Containers';
+import { product } from '@/utils/product';
+import React from 'react';
+// import { product } from "@/utils/products";
 import ProductDetails from './ProductDetails';
 import ListRating from './ListRating';
-import { product } from '@/utils/product';
+import getProductById from '@/actions/getProductById';
+import NullData from '@/app/components/NullData';
+import AddRating from './AddRating';
+import { getCurrentUser } from '@/actions/getCurrentUser';
+import Containers from '@/app/components/Containers';
 
 interface IPrams {
-  productId?: string;
+  productId: string;
 }
 
-const Product = ({ params }: { params: IPrams }) => {
-  console.log('params', params);
+const Product = async ({ params }: { params: IPrams }) => {
+  const product = await getProductById(params);
+  const user = await getCurrentUser();
 
-  const product = product.find((item) => item.id === params.productId);
+  if (!product) return <NullData title="Oops! Product not found!" />;
 
   return (
-    <div className=" p-0 pt-5">
+    <div className="text-[#0F1111] select-none pt-8">
       <Containers>
         <ProductDetails product={product} />
-        <div className=" flex flex-col mt-20 gap-4">
-          <div>Add Product Rating</div>
+        <div className="flex flex-col mt-20 gap-4">
+          {/* <AddRating product={product} user={user} /> */}
           <ListRating product={product} />
         </div>
       </Containers>
