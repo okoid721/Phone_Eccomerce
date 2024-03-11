@@ -41,6 +41,7 @@
     "paystack-js": "^0.18.1",
     "postcss": "8.4.35",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.50.1",
