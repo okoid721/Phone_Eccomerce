@@ -101,7 +101,7 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
               label={currentUser ? 'Continue to Checkout' : 'Login to Checkout'}
               outline={currentUser ? false : true}
               onClick={() => {
-                currentUser ? router.push('/checkout') : router.push('/login');
+                currentUser ? router.push('/paystack') : router.push('/login');
               }}
             />
 

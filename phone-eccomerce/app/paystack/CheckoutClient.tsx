@@ -48,11 +48,10 @@ const CheckoutClient = () => {
     <div className="">
       {cartproduct && (
         <PaystackCheckout
-          cartproduct={cartproduct}
           paymentSuccess={paymentSuccess}
-          handleSetPaymentSuccess={handleSetPaymentSuccess}
-          onPaymentSuccess={handleSetPaymentSuccess}
-          onPaymentClose={() => setPaymentSuccess(false)}
+          handleSetPaymentSuccess={function (value: boolean): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       )}
       {loading && <div className="text-center">Loading Checkout....</div>}

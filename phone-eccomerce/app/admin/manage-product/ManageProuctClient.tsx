@@ -23,11 +23,11 @@ import Haeding from '@/app/components/Haeding';
 import Status from '@/app/components/Status';
 import ActionBtn from '@/app/components/ActionBtn';
 
-interface ManageproductClientProps {
+interface ManageProductClientProps {
   product: Product[];
 }
 
-const ManageproductClient: React.FC<ManageproductClientProps> = ({
+const ManageProductClient: React.FC<ManageProductClientProps> = ({
   product,
 }) => {
   const router = useRouter();
@@ -189,4 +189,4 @@ const ManageproductClient: React.FC<ManageproductClientProps> = ({
   );
 };
 
-export default ManageproductClient;
+export default ManageProductClient;
