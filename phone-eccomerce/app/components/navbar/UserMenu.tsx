@@ -1,18 +1,17 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Avatar from '../Avatar';
-import { AiFillCaretDown } from 'react-icons/ai';
+import { FaCaretDown } from 'react-icons/fa6';
 import Link from 'next/link';
 import MenuItem from './MenuItem';
 import { signOut } from 'next-auth/react';
 import BackDrop from './BackDrop';
 import { useCart } from '@/app/hooks/useCart';
-import { User } from '@prisma/client';
-import { paystack } from '@/types';
+import { SafeUser } from '@/types';
 
 interface UserMenuProps {
-  currentUser: SafeUser | null;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
@@ -21,50 +20,50 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
+  const fullName = currentUser?.name;
+  const firstName = fullName?.split(' ')[0];
+
   return (
     <>
-      <div className=" relative z-30">
+      <div className="relative z-30 bg-[#F9A024] rounded-full cursor-pointer">
         <div
+          className="flex flex-row items-center justify-center px-4 p-3 gap-1 hover:shadow-md transition"
           onClick={toggleOpen}
-          className=" p-2 border-[1px] border-slate-500 flex flex-row items-center gap-1 rounded-full cursor-pointer hover:shadow-md transition text-slate-700 "
         >
+          {currentUser && <p>Hi, {firstName}</p>}
           <Avatar src={currentUser?.image} />
-          <AiFillCaretDown />
+          <FaCaretDown className="text-[#fff]" />
         </div>
         {isOpen && (
-          <div className="absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer ">
+          <div className="absolute rounded-md shadow-md w-[170px] bg-white text-black overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer">
             {currentUser ? (
-              <>
-                <div>
-                  <Link href={'/orders'}>
-                    <MenuItem onClick={toggleOpen}>My Orders</MenuItem>
-                  </Link>
-                </div>
-                <div>
-                  <Link href={'/admin'}>
-                    <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
-                  </Link>
-                  <hr />
-                  <MenuItem
-                    onClick={() => {
-                      toggleOpen();
-                      signOut();
-                    }}
-                  >
-                    Log Out
-                  </MenuItem>
-                </div>
-              </>
+              <div>
+                <Link href={'/orders'}>
+                  <MenuItem onClick={toggleOpen}>Your Orders</MenuItem>
+                </Link>
+                <Link href={'/admin'}>
+                  <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
+                </Link>
+                <hr />
+                {/* {isLoggedIn && ( */}
+                <MenuItem
+                  onClick={() => {
+                    toggleOpen();
+                    signOut();
+                  }}
+                >
+                  Log out
+                </MenuItem>
+                {/* )} */}
+              </div>
             ) : (
               <div>
-                <div>
-                  <Link href={'/login'}>
-                    <MenuItem onClick={toggleOpen}>Log in</MenuItem>
-                  </Link>
-                  <Link href={'/register'}>
-                    <MenuItem onClick={toggleOpen}>Create an account</MenuItem>
-                  </Link>
-                </div>
+                <Link href={'/login'}>
+                  <MenuItem onClick={toggleOpen}>Log in</MenuItem>
+                </Link>
+                <Link href={'/register'}>
+                  <MenuItem onClick={toggleOpen}>Create an account</MenuItem>
+                </Link>
               </div>
             )}
           </div>
